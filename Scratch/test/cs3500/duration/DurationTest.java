@@ -21,6 +21,7 @@ public class DurationTest {
   }
 
   @Test
-  public void asHms() {
+  public void TestasHms() {
+    Duration d = new DurationImpl(6,7,8);
   }
 }
