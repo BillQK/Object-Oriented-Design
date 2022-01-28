@@ -13,4 +13,13 @@ public class Card {
     this.value = v;
     this.suit = s;
   }
+
+  /**
+   *
+   * @return
+   */
+  @Override
+  public String toString() {
+    return value.toString() + suit.toString();
+  }
 }

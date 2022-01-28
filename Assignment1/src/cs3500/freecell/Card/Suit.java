@@ -6,5 +6,29 @@ package cs3500.freecell.Card;
  * red, clubs and spades are colored black.
  *
  */
-public class Suit {
+public enum Suit {
+  CLUB,
+  DIAMOND,
+  HEART,
+  SPADE;
+
+
+  @Override
+  public String toString()  {
+    if (this == Suit.CLUB) {
+      return "♣";
+    }
+    else if (this == Suit.DIAMOND) {
+      return "♦";
+    }
+    else if (this == Suit.HEART) {
+      return "♥";
+    }
+    else if (this == Suit.SPADE) {
+      return "♠";
+    }
+    else {
+      throw new IllegalArgumentException("Invalid Suit");
+    }
+  }
 }
