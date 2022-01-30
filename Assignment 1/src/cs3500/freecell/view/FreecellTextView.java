@@ -6,7 +6,7 @@ public class FreecellTextView implements FreecellView {
   private final FreecellModelState<?> model;
 
   public FreecellTextView(FreecellModelState<?> model) {
-    if( model == null) {
+    if (model == null) {
       throw new IllegalArgumentException("Model can't be null");
     }
     this.model = model;
@@ -14,19 +14,15 @@ public class FreecellTextView implements FreecellView {
 
   @Override
   public String toString() {
-
-    getString(model);
-
-    StringBuilder output = new StringBuilder();
-    output.append(model.getCascadeCardAt(0,6).toString());
-
+    String card = model.getCascadeCardAt(0, 6).toString();
     // ...
-    return output.toString();
+    return getString(model);
   }
+
   // "capture"
-  private <T> String getString(FreecellModelState<T> model)  {
-    T card = model.getCascadeCardAt(0,6);
-     return card.toString();
+  private <T> String getString(FreecellModelState<T> model) {
+    T card = model.getCascadeCardAt(0, 6);
+    return card.toString();
   }
 
 }
