@@ -1,7 +1,9 @@
+package solution;
+
 /**
  * This interface represents a single question in an online quiz. Each instance
  * of a question is assumed to be part of a quiz assigned to a particular student.
- * In other words, one Question object per student.
+ * In other words, one solution.Question object per student.
  */
 public interface Question {
 
