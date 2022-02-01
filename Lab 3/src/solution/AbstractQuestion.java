@@ -1,5 +1,9 @@
 package solution;
 
+
+/**
+ *
+ */
 abstract class AbstractQuestion implements Question {
   protected final String questionText;
   protected String enteredAnswer;
@@ -17,7 +21,7 @@ abstract class AbstractQuestion implements Question {
   public void answer(String enteredAnswer) {
     for (String option : options) {
       if (enteredAnswer.toLowerCase().equals(option)) {
-        this.enteredAnswer = enteredAnswer;
+        this.enteredAnswer = enteredAnswer.toLowerCase();
         return;
       }
     }

@@ -1,73 +1,22 @@
-
-import org.junit.Test;
-
-import java.util.Random;
-
 import solution.LikertQuestion;
 import solution.Question;
 
-import static org.junit.Assert.*;
 
-public class LikertQuestionTest {
-  private String longRandom;
+/**
+ *
+ */
+public class LikertQuestionTest extends AbstractQuestionTest {
+
   public LikertQuestionTest() {
-    longRandom = "aosdifjaso oifhas;ldihv;al skdfha;osidghv;osiadhvbasdjkhvn";
+    super();
+    answers = new String[]{"strongly agree", "agree",
+            "neither agree nor disagree",
+            "disagree", "strongly disagree"};
+    incorrectAnswers = new String[]{"weakly disagree", ""};
+    type = "Likert";
   }
 
-  @Test
-  public void testCreateValidLikertQuestion() {
-    Random r = new Random(200);
-    for (int i=0;i<1000;i++) {
-      int start = r.nextInt(longRandom.length()-1);
-      int end = start + r.nextInt(longRandom.length()-start-1) + 1;
-      String questionText = longRandom.substring(start,end);
-      Question q = new LikertQuestion(questionText+"?");
-      assertEquals(questionText+"?",q.getQuestionText());
-      assertEquals("Likert",q.getType());
-    }
-
+  protected Question whichQuestion(String question) {
+    return new LikertQuestion(question);
   }
-
-  @Test(expected=IllegalArgumentException.class)
-  public void testCreateLikertQuestionNoText() {
-    new LikertQuestion("");
-  }
-
-
-
-  @Test
-  public void testAnswerCorrectly() {
-    String []answers = {"strongly agree",
-                        "agree",
-                        "neither agree nor disagree",
-                        "disagree",
-                        "strongly disagree"};
-    for (String answer:answers) {
-      Question q = new LikertQuestion("Is this a trick question?");
-      assertFalse(q.hasBeenAnswered());
-
-      q.answer(answer);
-      assertEquals(answer.toLowerCase(), q.getEnteredAnswer());
-      assertTrue(q.hasBeenAnswered());
-    }
-  }
-
-  @Test
-  public void testAnswerInCorrectly() {
-    String []answers = {"weakly disagree",""};
-    for (String answer:answers) {
-      Question q = new LikertQuestion("Is this a trick question?");
-      assertFalse(q.hasBeenAnswered());
-
-      try {
-        q.answer(answer);
-        fail("Likert question accepted an invalid answer");
-      }
-      catch (IllegalArgumentException e) {
-        assertFalse(q.hasBeenAnswered());
-      }
-    }
-  }
-
-
 }

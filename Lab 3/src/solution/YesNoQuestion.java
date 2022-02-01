@@ -1,15 +1,21 @@
 package solution;
 
-//this class represents a yes/no question
+/**
+ * Represent a YesNo Question
+ */
 public class YesNoQuestion extends AbstractQuestion {
-
-  //a question must be non empty and should end with a question mark
+  /**
+   * A Constructor of an YesNo question
+   * @param text the question
+   * @throws IllegalArgumentException if the question doesn't end in a questio
+   * mark, it is illegal
+   */
   public YesNoQuestion(String text) throws IllegalArgumentException {
     super(text);
     if ((text.length()==0) || (text.charAt(text.length()-1)!='?')) {
       throw new IllegalArgumentException("Invalid question text");
     }
-    options = new String[]{"Yes", "No"};
+    options = new String[]{"yes", "no"};
     type = "YesNo";
   }
 }
