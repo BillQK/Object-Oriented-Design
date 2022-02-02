@@ -11,10 +11,10 @@ public class YesNoQuestionTest extends AbstractQuestionTest {
   /**
    * A constructor for YesNoQuestionTest.
    */
-  protected YesNoQuestionTest() {
+  public YesNoQuestionTest() {
     super();
-    answers = new String[] {"yes", "Yes", "YEs", "YeS", "YES", "yEs",
-                            "yES", "yeS", "no", "No", "nO", "NO"};
+    answers = new String[]{"yes", "Yes", "YEs", "YeS", "YES", "yEs",
+                           "yES", "yeS", "no", "No", "nO", "NO"};
     incorrectAnswers = new String[]{"yess", ""};
     type = "YesNo";
   }
