@@ -35,7 +35,7 @@ abstract class AbstractQuestion implements Question {
    */
   public void answer(String enteredAnswer) throws IllegalArgumentException {
     for (String option : options) {
-      if (enteredAnswer.toLowerCase().equals(option)) {
+      if (enteredAnswer.equalsIgnoreCase(option)) {
         this.enteredAnswer = enteredAnswer.toLowerCase();
         return;
       }
@@ -46,15 +46,14 @@ abstract class AbstractQuestion implements Question {
   /**
    * a method that check if the question has been answer or not.
    *
-   * @return a boolean value, if the question has been answered, it is true,
-   * else it is false.
+   * @return a boolean value
    */
   public boolean hasBeenAnswered() {
     if (enteredAnswer.isEmpty()) {
       return false;
     }
     for (String option : options) {
-      if (enteredAnswer.toLowerCase().equals(option)) {
+      if (enteredAnswer.equalsIgnoreCase(option)) {
         return true;
       }
 

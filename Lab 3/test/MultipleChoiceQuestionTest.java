@@ -5,14 +5,13 @@ import solution.Question;
  * Tests for {@link MultipleChoiceQuestion}.
  */
 public class MultipleChoiceQuestionTest extends AbstractQuestionTest {
+  /**
+   * A constructor for MultipleChoiceQuestion Test.
+   */
   public MultipleChoiceQuestionTest() {
     super();
-    answers = new String[]{
-            "1", "2", "3", "4"
-    };
-    incorrectAnswers = new String[]{
-            "123", "hi", "?", "fd", ""
-    };
+    answers = new String[] {"1", "2", "3", "4"};
+    incorrectAnswers = new String[] {"123", "hi", "?", "fd", ""};
     type = "MultipleChoice";
 
   }

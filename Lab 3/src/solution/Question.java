@@ -8,7 +8,7 @@ package solution;
 public interface Question {
 
   /**
-   * Get the text of this question
+   * Get the text of this question.
    * @return the text of this question as a string
    */
   String getQuestionText();

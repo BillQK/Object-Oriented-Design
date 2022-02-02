@@ -8,9 +8,13 @@ import solution.YesNoQuestion;
  */
 public class YesNoQuestionTest extends AbstractQuestionTest {
 
-  public YesNoQuestionTest() {
+  /**
+   * A constructor for YesNoQuestionTest.
+   */
+  protected YesNoQuestionTest() {
     super();
-    answers = new String[]{"yes", "Yes", "YEs", "YeS", "YES", "yEs", "yES", "yeS", "no", "No", "nO", "NO"};
+    answers = new String[] {"yes", "Yes", "YEs", "YeS", "YES", "yEs",
+                            "yES", "yeS", "no", "No", "nO", "NO"};
     incorrectAnswers = new String[]{"yess", ""};
     type = "YesNo";
   }

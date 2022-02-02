@@ -7,10 +7,14 @@ import solution.Question;
  */
 public class LikertQuestionTest extends AbstractQuestionTest {
 
+  /**
+   * A constructor for LikerQuestionTest.
+   */
   public LikertQuestionTest() {
     super();
-    answers = new String[]{"strongly agree", "agree",
-            "neither agree nor disagree", "disagree", "strongly disagree"};
+    answers = new String[] {"strongly agree", "agree",
+                            "neither agree nor disagree", "disagree",
+                            "strongly disagree"};
     incorrectAnswers = new String[]{"weakly disagree", ""};
     type = "Likert";
   }

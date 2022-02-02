@@ -10,12 +10,13 @@ public class LikertQuestion extends AbstractQuestion {
    *
    * @param text A String which represent the question text
    * @throws IllegalArgumentException if the parameter is an empty String, then
-   * throws an illegal argument exception.
+   *                                  throws an illegal argument exception.
    */
   //a valid question must have text
   public LikertQuestion(String text) throws IllegalArgumentException {
     super(text);
-    options = new String[]{"strongly agree", "agree", "neither agree nor disagree", "disagree", "strongly disagree"};
+    options = new String[]{"strongly agree", "agree","neither agree nor disagree", "disagree",
+                           "strongly disagree"};
     type = "Likert";
   }
 }

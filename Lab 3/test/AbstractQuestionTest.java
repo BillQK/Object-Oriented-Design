@@ -11,7 +11,7 @@ import static org.junit.Assert.fail;
 
 
 /**
- * Tests for {@link Question}s
+ * Tests for {@link Question}s.
  */
 abstract class AbstractQuestionTest {
   protected String longRandom;
