@@ -1,22 +1,16 @@
 import org.junit.Test;
 
-import java.util.Random;
-
 import solution.Question;
 import solution.YesNoQuestion;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+/**
+ * Tests for {@link YesNoQuestion}.
+ */
 public class YesNoQuestionTest extends AbstractQuestionTest {
 
   public YesNoQuestionTest() {
     super();
-    answers = new String[]{"yes", "Yes",
-            "YEs", "YeS", "YES", "yEs",
-            "yES", "yeS", "no", "No", "nO", "NO"};
+    answers = new String[]{"yes", "Yes", "YEs", "YeS", "YES", "yEs", "yES", "yeS", "no", "No", "nO", "NO"};
     incorrectAnswers = new String[]{"yess", ""};
     type = "YesNo";
   }

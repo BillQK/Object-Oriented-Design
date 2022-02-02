@@ -9,6 +9,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+
+/**
+ * Tests for {@link Question}s
+ */
 abstract class AbstractQuestionTest {
   protected String longRandom;
   protected String[] answers;
