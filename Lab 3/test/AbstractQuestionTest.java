@@ -14,7 +14,7 @@ import static org.junit.Assert.fail;
  * Tests for {@link Question}s.
  */
 abstract class AbstractQuestionTest {
-  protected String longRandom;
+  protected final String longRandom;
   protected String[] answers;
   protected String[] incorrectAnswers;
   protected String type;
