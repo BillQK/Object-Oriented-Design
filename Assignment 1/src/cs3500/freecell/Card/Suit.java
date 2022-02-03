@@ -6,23 +6,36 @@ package cs3500.freecell.Card;
  * red, clubs and spades are colored black.
  */
 public enum Suit {
-  CLUB, DIAMOND, HEART, SPADE;
+  CLUB('♣', Color.BLACK), DIAMOND('♦', Color.RED), HEART('♥', Color.RED), SPADE('♠', Color.BLACK);
 
+  private final char graf;
+  private final Color color;
 
-  @Override
-  public String toString() {
-    if (this == Suit.CLUB) {
-      return "♣";
-    } else if (this == Suit.DIAMOND) {
-      return "♦";
-    } else if (this == Suit.HEART) {
-      return "♥";
-    } else if (this == Suit.SPADE) {
-      return "♠";
-    } else {
-      throw new IllegalArgumentException("Invalid Suit");
-    }
+  /**
+   * A suit constructors.
+   * @param graf a char value represent the suit
+   * @param color a Color object represent the color of the suit
+   */
+  Suit(char graf, Color color) {
+    this.graf = graf;
+    this.color = color;
   }
 
+  /**
+   * a method that get the suit value
+   * @return a char value of suit
+   */
+  public char getGraf() {
+    return graf;
+  }
+
+  /**
+   * a method that return a string vlaue of a suit
+   * @return a String
+   */
+  @Override
+  public String toString() {
+    return String.valueOf(graf);
+  }
 
 }
