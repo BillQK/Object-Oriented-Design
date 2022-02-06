@@ -1,4 +1,17 @@
 package cs3500.freecell.model;
 
-public class OpenPile implements Pile{
+import cs3500.freecell.Card.Card;
+
+public class OpenPile extends Pile{
+
+  public OpenPile(String name, int row) {
+    super(name, row);
+  }
+
+  @Override
+  public void add(Card i) {
+    LoC.add(i);
+  }
+
+
 }

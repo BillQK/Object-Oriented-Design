@@ -6,7 +6,7 @@ package cs3500.freecell.Card;
  * red, clubs and spades are colored black.
  */
 public enum Suit {
-  CLUB('♣', Color.BLACK), DIAMOND('♦', Color.RED), HEART('♥', Color.RED), SPADE('♠', Color.BLACK);
+  CLUB('♣', Color.BLACK), DIAMOND('♦', Color.RED), SPADE('♠', Color.BLACK), HEART('♥', Color.RED);
 
   private final char graf;
   private final Color color;
