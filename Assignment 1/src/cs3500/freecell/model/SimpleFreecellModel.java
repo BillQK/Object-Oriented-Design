@@ -6,10 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import cs3500.freecell.Card.Card;
-import cs3500.freecell.Card.Suit;
-import cs3500.freecell.Card.Value;
-
 /**
  * A Representation of a simple FreeCell Model.
  */
@@ -18,8 +14,7 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
   private final List<Pile> listOfOpenPiles;
   private final List<Pile> listOfFoundationPiles;
   private List<Card> deck;
-  private boolean gamestart;
-
+  private boolean isGameStart;
 
 
   /**
@@ -31,49 +26,47 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
     this.listOfOpenPiles = new ArrayList<>();
     this.listOfFoundationPiles = new ArrayList<>();
     populatePiles(4, PileType.FOUNDATION); // limit to 4 piles.
-    this.gamestart = false;
+    this.isGameStart = false;
   }
 
   /**
-   * a method that generate the piles in the list
+   * a method that generate the piles in the list.
    *
    * @param num      number of piles
    * @param pileType which pile type you want to create
    */
   private void populatePiles(int num, PileType pileType) {
-    int i = 0;
     while (num != 0) {
       if (pileType == PileType.CASCADE) {
-        this.listOfCascadePiles.add(new CascadePile("C", i + 1));
+        this.listOfCascadePiles.add(new CascadePile());
       } else if (pileType == PileType.OPEN) {
-        this.listOfOpenPiles.add(new OpenPile("O", i + 1));
+        this.listOfOpenPiles.add(new OpenPile());
       } else if (pileType == PileType.FOUNDATION) {
-        this.listOfFoundationPiles.add(new FoundationPile("F", i + 1));
+        this.listOfFoundationPiles.add(new FoundationPile());
       }
-      i++;
       num--;
     }
   }
 
   /**
-   * a method to populate the deck
+   * a method to populate the deck.
    *
    * @return a list of card.
    */
   @Override
   public List<Card> getDeck() {
-    List<Card> LoC = new ArrayList<>();
+    List<Card> loc = new ArrayList<>();
 
     for (Suit suit : Suit.values()) {
       for (Value val : Value.values()) {
-        LoC.add(new Card(val, suit));
+        loc.add(new Card(val, suit));
       }
     }
-    return LoC;
+    return loc;
   }
 
   /**
-   * check for duplicate and null in the deck
+   * check for duplicate and null in the deck.
    *
    * @param deck a list of card
    * @return a boolean
@@ -90,22 +83,39 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
 
 
   /**
-   * @param deck            the deck to be dealt
+   * Deal a new game of freecell with the given deck, with or without shuffling
+   * it first. This method first verifies that the deck is valid. It deals the
+   * deck among the cascade piles in roundrobin fashion. Thus if there are 4
+   * cascade piles, the 1st pile will get cards 0, 4, 8, ..., the 2nd pile will
+   * get cards 1, 5, 9, ..., the 3rd pile will get cards 2, 6, 10, ... and the
+   * 4th pile will get cards 3, 7, 11, .... Depending on the number of cascade
+   * piles, they may have a different number of cards.
+   *
    * @param numCascadePiles number of cascade piles
    * @param numOpenPiles    number of open piles
+   * @param deck            the deck to be dealt
    * @param shuffle         if true, shuffle the deck else deal the deck as-is
+   * @throws IllegalArgumentException if the deck is invalid
    */
-
   @Override
   public void startGame(List<Card> deck, int numCascadePiles, int numOpenPiles, boolean shuffle) {
+    if (isGameStart) {
+      this.listOfOpenPiles.clear();
+      this.listOfCascadePiles.clear();
+      this.listOfFoundationPiles.clear();
+      populatePiles(4, PileType.FOUNDATION);
+
+    }
     if (deck.isEmpty()) {
       throw new IllegalArgumentException("Deck is invalid");
     }
     if (!validDeck(deck)) {
       throw new IllegalArgumentException("Deck is invalid");
-    } else {
-      this.deck = deck;
     }
+    if (shuffle) {
+      Collections.shuffle(deck);
+    }
+    this.deck = deck;
     if (numCascadePiles < 4) {
       throw new IllegalArgumentException("Invalid number of Cascade Piles");
     } else {
@@ -116,21 +126,24 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
     } else {
       this.populatePiles(numOpenPiles, PileType.OPEN);
     }
-    if (shuffle) {
-      Collections.shuffle(deck);
-    }
+
 
     // Round-robin card dealt fashion
     for (int j = 0; j < deck.size(); j++) {
       Card card = this.deck.get(j);
       this.listOfCascadePiles.get(j % numCascadePiles).add(card);
     }
-    this.gamestart = true;
+    this.isGameStart = true;
+
+
   }
 
   /**
-   * @param pile
-   * @return
+   * A method the given the PileType, return a list of that type.
+   *
+   * @param pile a PileType
+   * @return a List of Pile
+   * @throws IllegalArgumentException if the given PileType is invalid
    */
   private List<Pile> getPile(PileType pile) {
     if (pile == PileType.CASCADE) {
@@ -145,12 +158,20 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
   }
 
   /**
-   * @param source
-   * @param pileNumber
-   * @param destination
-   * @param destPileNumber
+   * A method that takes in PileType source, int pile-number, PileType dest, and destination
+   * number to determine if the move is valid.
+   *
+   * @param source         a PileType
+   * @param pileNumber     an int
+   * @param destination    a PileType
+   * @param destPileNumber an int
+   * @throws IllegalArgumentException if the PileType from dest is not compatible with
+   *                                  the PileType from the source
+   * @throws IllegalArgumentException if pileNumber and destNumber are less than 0
+   *                                  or greater than the pile size
    */
-  private void isValidMovePileType(PileType source, int pileNumber, PileType destination, int destPileNumber) {
+  private void isValidMovePileType(PileType source, int pileNumber,
+                                   PileType destination, int destPileNumber) {
     // get source pile
     List<Pile> sourcePileType = getPile(source);
     // get dest pile
@@ -172,9 +193,25 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
     }
   }
 
+  /**
+   * Move a card from the given source pile to the given destination pile, if
+   * the move is valid.
+   *
+   * @param source         the type of the source pile see @link{PileType}
+   * @param pileNumber     the pile number of the given type, starting at 0
+   * @param cardIndex      the index of the card to be moved from the source
+   *                       pile, starting at 0
+   * @param destination    the type of the destination pile (see
+   * @param destPileNumber the pile number of the given type, starting at 0
+   * @throws IllegalArgumentException if the move is not possible {@link
+   *                                  PileType})
+   * @throws IllegalStateException    if a move is attempted before the game has
+   *                                  starts
+   */
   @Override
-  public void move(PileType source, int pileNumber, int cardIndex, PileType destination, int destPileNumber) {
-    if (!gamestart) {
+  public void move(PileType source, int pileNumber,
+                   int cardIndex, PileType destination, int destPileNumber) {
+    if (!isGameStart) {
       throw new IllegalStateException("Games has not started");
     }
     if (isGameOver()) {
@@ -196,28 +233,21 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
     if (sourcePile.isEmpty()) {
       throw new IllegalArgumentException("Invalid source pile. No Cards Available");
     }
-    // move many cards
-    if (moveMoreThanOneCards(sourcePile, cardIndex) && destPile.canAddListCard()) {
 
+    // Round robin card-dealt fashion
+    if (destPile.canBeAdded(sourcePile.getTopCard())) {
+      destPile.add(sourcePile.getTopCard());
+      sourcePile.remove(sourcePile.getTopCard());
     } else {
-      if (destPile.canBeAdded(sourcePile.getTopCard())) {
-        destPile.add(sourcePile.getTopCard());
-        sourcePile.remove(sourcePile.getTopCard());
-      } else {
-        throw new IllegalArgumentException("Invalid moves");
-      }
+      throw new IllegalArgumentException("Invalid moves");
     }
 
-
   }
-
-  private boolean moveMoreThanOneCards(Pile sourcePile, int cardIndex) {
-    return ((sourcePile.numberOfCards() - 1) - cardIndex) > 1;
-  }
-
 
   /**
-   * @return
+   * Signal if the game is over or not.
+   *
+   * @return true if game is over, false otherwise
    */
   @Override
   public boolean isGameOver() {
@@ -229,12 +259,17 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
   }
 
   /**
+   * Get the number of cards in a given foundation pile.
+   *
    * @param index the index of the foundation pile, starting at 0
-   * @return
+   * @return the number of cards in the given foundation pile
+   * @throws IllegalArgumentException if the provided index is invalid
+   * @throws IllegalStateException    if the game has not started
    */
   @Override
-  public int getNumCardsInFoundationPile(int index) throws IllegalArgumentException, IllegalStateException {
-    if (!gamestart) {
+  public int getNumCardsInFoundationPile(int index)
+          throws IllegalArgumentException, IllegalStateException {
+    if (!isGameStart) {
       throw new IllegalStateException("Game not started!!");
     }
     if (index < 0 || index >= listOfFoundationPiles.size()) {
@@ -244,11 +279,13 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
   }
 
   /**
-   * @return
+   * Get the number of cascade piles in this game of free-cell.
+   *
+   * @return the number of cascade piles, as an integer, or -1 if the game has not started yet
    */
   @Override
   public int getNumCascadePiles() {
-    if (!gamestart) {
+    if (!isGameStart) {
       return -1;
     } else {
       return listOfCascadePiles.size();
@@ -256,46 +293,53 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
   }
 
   /**
+   * Get the number of cards in a given cascade pile.
+   *
    * @param index the index of the cascade pile, starting at 0
-   * @return
+   * @return the number of cards in the given cascade pile
+   * @throws IllegalArgumentException if the provided index is invalid
+   * @throws IllegalStateException    if the game has not started
    */
   @Override
-  public int getNumCardsInCascadePile(int index) throws IllegalArgumentException, IllegalStateException {
-    if (!gamestart) {
+  public int getNumCardsInCascadePile(int index)
+          throws IllegalArgumentException, IllegalStateException {
+    if (!isGameStart) {
       throw new IllegalStateException("Game not started!!");
     }
     if (index < 0 || index >= listOfCascadePiles.size()) {
       throw new IllegalArgumentException("Invalid index");
     }
-    if (this.listOfCascadePiles.get(index).isEmpty()) {
-      throw new IllegalStateException("Game not started!!");
-    }
     return this.listOfCascadePiles.get(index).numberOfCards();
   }
 
   /**
+   * Get the number of cards in a given open pile.
+   *
    * @param index the index of the open pile, starting at 0
-   * @return
+   * @return the number of cards in the given open pile
+   * @throws IllegalArgumentException if the provided index is invalid
+   * @throws IllegalStateException    if the game has not started
    */
   @Override
-  public int getNumCardsInOpenPile(int index) throws IllegalArgumentException, IllegalStateException {
-    if (!gamestart) {
-      throw new IllegalStateException("Game not started!!");
+  public int getNumCardsInOpenPile(int index)
+          throws IllegalArgumentException, IllegalStateException {
+    if (!isGameStart) {
+      throw new IllegalStateException("Game not Started!!");
     }
-    if (index >= listOfFoundationPiles.size()) {
-      throw new IllegalArgumentException("Invalid index");
-    } else if (index < 0) {
+    if (index >= listOfOpenPiles.size() || index < 0) {
       throw new IllegalArgumentException("Invalid index");
     }
     return listOfOpenPiles.get(index).numberOfCards();
   }
 
   /**
-   * @return
+   * Get the number of open piles in this game of freecell.
+   *
+   * @return the number of open piles, as an integer, or -1 if the game has not started yet
    */
   @Override
   public int getNumOpenPiles() {
-    if (!gamestart) {
+    if (!isGameStart) {
       return -1;
     } else {
       return listOfOpenPiles.size();
@@ -303,20 +347,24 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
   }
 
   /**
+   * Get the card at the provided index in the provided foundation pile.
+   *
    * @param pileIndex the index of the foundation pile, starting at 0
    * @param cardIndex the index of the card in the above foundation pile, starting at 0
-   * @return
-   * @throws IllegalArgumentException
+   * @return the card at the provided indices
+   * @throws IllegalArgumentException if the pileIndex or cardIndex is invalid
+   * @throws IllegalStateException    if the game has not started
    */
   @Override
-  public Card getFoundationCardAt(int pileIndex, int cardIndex) throws IllegalArgumentException, IllegalStateException {
-    if (!gamestart) {
+  public Card getFoundationCardAt(int pileIndex, int cardIndex)
+          throws IllegalArgumentException, IllegalStateException {
+    if (!isGameStart) {
       throw new IllegalStateException("Game not started!!");
     }
-    if (listOfFoundationPiles.size() - 1 < pileIndex) {
+    if (listOfFoundationPiles.size() <= pileIndex || pileIndex < 0) {
       throw new IllegalArgumentException("Out of bound arguments: pileIndex");
     }
-    if (listOfFoundationPiles.get(pileIndex).numberOfCards() - 1 < cardIndex) {
+    if (listOfFoundationPiles.get(pileIndex).numberOfCards() <= cardIndex || cardIndex < 0) {
       throw new IllegalArgumentException("Out of bound arguments: cardIndex");
     }
     Card cardAtIndex;
@@ -326,21 +374,27 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
   }
 
   /**
+   * Get the card at the provided index in the provided cascade pile.
+   *
    * @param pileIndex the index of the cascade pile, starting at 0
    * @param cardIndex the index of the card in the above cascade pile, starting at 0
-   * @return
-   * @throws IllegalArgumentException
+   * @return the card at the provided indices
+   * @throws IllegalArgumentException if the pileIndex or cardIndex is invalid
+   * @throws IllegalStateException    if the game has not started
    */
   @Override
-  public Card getCascadeCardAt(int pileIndex, int cardIndex) throws IllegalArgumentException, IllegalStateException {
-    if (!gamestart) {
-      throw new IllegalStateException("Game not started");
+  public Card getCascadeCardAt(int pileIndex, int cardIndex)
+          throws IllegalArgumentException, IllegalStateException {
+    if (!isGameStart) {
+      throw new IllegalStateException("Game not started!!");
     }
-    if (listOfCascadePiles.size() - 1 < pileIndex) {
-      throw new IllegalArgumentException("Out of bound arguments: Pile Index" + (listOfCascadePiles.size() - 1) + "out of " + pileIndex);
+    if (listOfCascadePiles.size() <= pileIndex || pileIndex < 0) {
+      throw new IllegalArgumentException("Out of bound arguments: Pile Index"
+              + (listOfCascadePiles.size() - 1) + "out of " + pileIndex);
     }
-    if (listOfCascadePiles.get(pileIndex).numberOfCards() - 1 < cardIndex) {
-      throw new IllegalArgumentException("Out of bound arguments: Card Index" + (listOfCascadePiles.get(pileIndex).numberOfCards() - 1) + cardIndex);
+    if (listOfCascadePiles.get(pileIndex).numberOfCards() <= cardIndex || cardIndex < 0) {
+      throw new IllegalArgumentException("Out of bound arguments: Card Index"
+              + (listOfCascadePiles.get(pileIndex).numberOfCards() - 1) + cardIndex);
     } else {
       Card cardAtIndex;
       Pile pile = listOfCascadePiles.get(pileIndex);
@@ -350,17 +404,20 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
   }
 
   /**
+   * Get the card in the given open pile.
+   *
    * @param pileIndex the index of the open pile, starting at 0
-   * @return
-   * @throws IllegalArgumentException
+   * @return the card at the provided index, or null if there is no card there
+   * @throws IllegalArgumentException if the pileIndex is invalid
+   * @throws IllegalStateException    if the game has not started
    */
   @Override
   public Card getOpenCardAt(int pileIndex) throws IllegalArgumentException, IllegalStateException {
-    if (pileIndex > listOfOpenPiles.size() - 1 || pileIndex < 0) {
-      throw new IllegalArgumentException("Out of Bound arguments: pileIndex");
+    if (!isGameStart) {
+      throw new IllegalStateException("Game not started!!");
     }
-    if (!gamestart) {
-      throw new IllegalStateException("Game not started");
+    if (pileIndex >= listOfOpenPiles.size() || pileIndex < 0) {
+      throw new IllegalArgumentException("Out of Bound arguments: pileIndex");
     } else {
       Card cardAtIndex;
       Pile pile = listOfOpenPiles.get(pileIndex);

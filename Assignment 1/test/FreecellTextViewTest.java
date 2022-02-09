@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import cs3500.freecell.Card.Card;
-import cs3500.freecell.Card.Suit;
-import cs3500.freecell.Card.Value;
+import cs3500.freecell.model.Card;
+import cs3500.freecell.model.Suit;
+import cs3500.freecell.model.Value;
 import cs3500.freecell.model.FreecellModel;
 import cs3500.freecell.model.PileType;
 import cs3500.freecell.model.SimpleFreecellModel;
@@ -112,6 +112,7 @@ public class FreecellTextViewTest {
     model = new SimpleFreecellModel();
     model.startGame(LoC, 5, 2, false);
     model.move(PileType.CASCADE, 4, 12, PileType.OPEN, 0);
+    model.startGame(LoC, 10,5,false);
     textView = new FreecellTextView(model);
     System.out.println(textView.toString());
    assertEquals(textView.toString(), textView.toString());

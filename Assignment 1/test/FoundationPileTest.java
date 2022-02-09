@@ -9,15 +9,7 @@ public class FoundationPileTest {
   }
 
   @Test
-  public void canAddListCard() {
-  }
-
-  @Test
   public void validPile() {
-  }
-
-  @Test
-  public void getMoveCards() {
   }
 
   @Test

@@ -1,4 +1,4 @@
-package cs3500.freecell.Card;
+package cs3500.freecell.model;
 
 
 import java.util.Objects;
@@ -32,11 +32,7 @@ public class Card {
    */
   @Override
   public String toString() {
-    if (this == null) {
-      return "";
-    } else {
-      return value + suit.toString();
-    }
+    return value + suit.toString();
   }
 
   /**
@@ -63,7 +59,9 @@ public class Card {
   }
 
   /**
-   * @return
+   * A method that hash the value and the suit.
+   *
+   * @return an int
    */
   @Override
   public int hashCode() {
@@ -72,9 +70,11 @@ public class Card {
 
 
   /**
-   * @param card
-   * @return
-   * @throws
+   * A method that determines that if the card is valid to add to the Foundation card.
+   *
+   * @param card a Card object
+   * @return a boolean
+   * @throws IllegalArgumentException if it can't add card to the foundation
    */
   public boolean isValidToAddToFoundation(Card card) {
     if (this.value.isOneGreater(card.value) && this.suit.isSameType(card.suit)) {
@@ -87,11 +87,14 @@ public class Card {
   }
 
   /**
-   * @param card
-   * @return
+   * a method that determines if the card is valid to add the Cascade pile.
+   *
+   * @param card a Card object
+   * @return a boolean
+   * @throws IllegalArgumentException if it can't add card to the cascade pile
    */
   public boolean isValidToAddToCascade(Card card) {
-    if (this.value.isOneLower(card.value) && this.suit.isDifferentColor(card.suit)) {
+    if (this.value.isOneSmaller(card.value) && this.suit.isDifferentColor(card.suit)) {
       return true;
     } else {
       throw new IllegalArgumentException("Card cannot be added to the Cascade Pile");
@@ -99,7 +102,9 @@ public class Card {
   }
 
   /**
-   * @return
+   * a method that determines if the card is an ace or not.
+   *
+   * @return a boolean
    */
   public boolean isAnAce() {
     return value == Value.ACE;

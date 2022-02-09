@@ -8,15 +8,11 @@ public class OpenPileTest {
   public void canBeAdded() {
   }
 
-  @Test
-  public void canAddListCard() {
-  }
+
 
   @Test
   public void validPile() {
   }
 
-  @Test
-  public void getMoveCards() {
-  }
+
 }

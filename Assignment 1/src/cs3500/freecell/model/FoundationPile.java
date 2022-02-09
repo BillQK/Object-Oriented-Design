@@ -1,47 +1,43 @@
 package cs3500.freecell.model;
 
-import java.util.List;
-
-import cs3500.freecell.Card.Card;
-
+/**
+ * a representation of a Foundation Pile.
+ */
 public class FoundationPile extends Pile {
-  public FoundationPile(String name, int row) {
-    super(name, row);
+  /**
+   * A Constructor for Foundation Pile.
+   */
+  public FoundationPile() {
+    super();
 
   }
 
-
-
+  /**
+   * a method that determines if the given card is compatible with this.
+   *
+   * @param i a Card
+   * @return a boolean
+   */
   @Override
   public boolean canBeAdded(Card i) {
-    if (LoC.isEmpty() && i.isAnAce()) {
-      return true;
-    }
-    else if (!LoC.isEmpty() && getTopCard().isValidToAddToFoundation(i)) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    if (loc.isEmpty() && i.isAnAce()) return true;
+    return (!loc.isEmpty() && getTopCard().isValidToAddToFoundation(i));
   }
 
-  @Override
-  public boolean canAddListCard() {
-    return false;
-  }
-
+  /**
+   * a method that determines if the given PileType is compatible with this.
+   *
+   * @param sourcePile a PileType
+   * @return a boolean
+   */
   @Override
   public boolean validPile(PileType sourcePile) {
     return sourcePile == PileType.CASCADE || sourcePile == PileType.OPEN;
   }
 
-  @Override
-  public List<Card> getMoveCards(int cardIndex) {
-    throw new IllegalStateException("Foundation Pile can't add a list of card");
-  }
 
   public boolean isFull() {
-    return LoC.size() == 13;
+    return loc.size() == 13;
   }
 
 }

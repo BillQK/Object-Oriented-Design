@@ -1,38 +1,41 @@
 package cs3500.freecell.model;
 
-import java.util.List;
+/**
+ * A representation of an Open Pile.
+ */
+public class OpenPile extends Pile {
 
-import cs3500.freecell.Card.Card;
-
-public class OpenPile extends Pile{
-
-  public OpenPile(String name, int row) {
-    super(name, row);
+  /**
+   * A Constructor for OpenPile.
+   */
+  public OpenPile() {
+    super();
   }
 
+  /**
+   * A method that determines if the given card is compatible with this.
+   *
+   * @param i a Card
+   * @return a boolean
+   */
   @Override
   public boolean canBeAdded(Card i) {
-    if(LoC.isEmpty()) {
+    if (loc.isEmpty()) {
       return true;
-    }
-    else {
-      throw new RuntimeException("Open pile is not empty");
+    } else {
+      throw new IllegalArgumentException("Card cannot be added in the Open Pile, Pile is full");
     }
   }
 
-  @Override
-  public boolean canAddListCard() {
-    return false;
-  }
-
+  /**
+   * A method that determines if the given PileType is compatible with Open PileType
+   *
+   * @param sourcePile a PileType
+   * @return a boolean
+   */
   @Override
   public boolean validPile(PileType sourcePile) {
     return sourcePile == PileType.CASCADE;
-  }
-
-  @Override
-  public List<Card> getMoveCards(int cardIndex) {
-    throw new IllegalStateException("OpenPile cannot add a list of cards");
   }
 
 

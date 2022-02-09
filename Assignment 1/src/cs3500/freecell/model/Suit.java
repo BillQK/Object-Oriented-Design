@@ -1,4 +1,4 @@
-package cs3500.freecell.Card;
+package cs3500.freecell.model;
 
 /**
  * Represent 4 suit-value of cards clubs (♣), diamonds (♦),
@@ -23,7 +23,7 @@ public enum Suit {
   }
 
   /**
-   * a method that get the suit value
+   * a method that get the suit value.
    *
    * @return a char value of suit
    */
@@ -32,7 +32,7 @@ public enum Suit {
   }
 
   /**
-   * a method that return a string vlaue of a suit
+   * a method that return a string value of a suit.
    *
    * @return a String
    */
@@ -41,11 +41,23 @@ public enum Suit {
     return String.valueOf(graf);
   }
 
+  /**
+   * a method that determine if the given suit is the same suit.
+   *
+   * @param suit a suit
+   * @return a boolean
+   */
   public boolean isSameType(Suit suit) {
     return this.graf == suit.graf;
   }
 
+  /**
+   * a method that determine if the given Suit has a different color.
+   *
+   * @param suit a suit
+   * @return a boolean
+   */
   public boolean isDifferentColor(Suit suit) {
-    return !(this.color == suit.color);
+    return this.color != suit.color;
   }
 }

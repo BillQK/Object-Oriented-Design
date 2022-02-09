@@ -1,42 +1,42 @@
 package cs3500.freecell.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import cs3500.freecell.Card.Card;
-
+/**
+ * a representation of a cascade pile.
+ */
 public class CascadePile extends Pile {
 
-  public CascadePile(String name, int row) {
-    super(name,row);
+  /**
+   * a constructor of CascadePile that takes in a String and int row.
+   */
+  public CascadePile() {
+    super();
   }
 
+  /**
+   * A method that determines if the given card is valid to be added to the Pile.
+   *
+   * @param i a Card
+   * @return a boolean
+   */
   @Override
   public boolean canBeAdded(Card i) {
-    if(LoC.isEmpty()){
+    if (loc.isEmpty() || getTopCard().isValidToAddToCascade(i)) {
       return true;
-    }else {
-      return getTopCard().isValidToAddToCascade(i);
+    } else {
+      throw new IllegalArgumentException("Card cannot be added to the Cascade Pile");
     }
   }
 
-  @Override
-  public boolean canAddListCard() {
-    return false;
-  }
-
+  /**
+   * a method that determines if the given Pile is compatible with this.
+   *
+   * @param sourcePile a PileType
+   * @return a boolean
+   */
   @Override
   public boolean validPile(PileType sourcePile) {
     return sourcePile == PileType.OPEN || sourcePile == PileType.CASCADE;
-  }
-
-  @Override
-  public List<Card> getMoveCards(int cardIndex) {
-    List<Card> cardList = new ArrayList<>();
-    for(int i = cardIndex; i < LoC.size(); i++){
-      cardList.add(LoC.get(i));
-    }
-    return cardList;
   }
 
 

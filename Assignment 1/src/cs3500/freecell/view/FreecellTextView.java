@@ -2,9 +2,17 @@ package cs3500.freecell.view;
 
 import cs3500.freecell.model.FreecellModelState;
 
+/**
+ * A representation of a Freecell Text View Class.
+ */
 public class FreecellTextView implements FreecellView {
   private final FreecellModelState<?> model;
 
+  /**
+   * A constructor of FreecellTextview.
+   * @param model a given FreecellModelState
+   * @throws IllegalStateException if the model is null
+   */
   public FreecellTextView(FreecellModelState<?> model) {
     if (model == null) {
       throw new IllegalArgumentException("Model can't be null");
@@ -40,7 +48,12 @@ public class FreecellTextView implements FreecellView {
     return getString(model);
   }
 
-
+  /**
+   * a Helper method for toString() that compiles the information from the model.
+   * @param m a FreecellModelState
+   * @param <T> Card
+   * @return a String
+   */
   private <T> String getString(FreecellModelState<T> m) {    // "capture" the wildcard
     String view = "";
     String foundation = "";

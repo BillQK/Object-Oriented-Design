@@ -24,16 +24,9 @@ public class PileTest {
   public void canBeAdded() {
   }
 
-  @Test
-  public void canAddListCard() {
-  }
 
   @Test
   public void validPile() {
-  }
-
-  @Test
-  public void getMoveCards() {
   }
 
   @Test
