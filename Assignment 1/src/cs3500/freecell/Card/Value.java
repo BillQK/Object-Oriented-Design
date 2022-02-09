@@ -5,10 +5,7 @@ package cs3500.freecell.Card;
  * King = 13, Ace = 1.
  */
 public enum Value {
-  ACE(1), TWO(2), THREE(3),
-  FOUR(4), FIVE(5),
-  SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10), JACK(11), QUEEN(12),
-  KING(13);
+  ACE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10), JACK(11), QUEEN(12), KING(13);
   private final int value;
 
   Value(int value) {
@@ -20,6 +17,7 @@ public enum Value {
 
   /**
    * A method that return the string representation of the card value
+   *
    * @return a String value
    */
   @Override
@@ -35,5 +33,17 @@ public enum Value {
     } else {
       return this.value + "";
     }
+  }
+
+  public int getValue() {
+    return this.value;
+  }
+
+  public boolean isOneGreater(Value value) {
+    return (value.getValue() - this.value) == 1;
+  }
+
+  public boolean isOneLower(Value value) {
+    return (this.value - value.getValue()) == 1;
   }
 }

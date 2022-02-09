@@ -13,7 +13,8 @@ public enum Suit {
 
   /**
    * A suit constructors.
-   * @param graf a char value represent the suit
+   *
+   * @param graf  a char value represent the suit
    * @param color a Color object represent the color of the suit
    */
   Suit(char graf, Color color) {
@@ -23,6 +24,7 @@ public enum Suit {
 
   /**
    * a method that get the suit value
+   *
    * @return a char value of suit
    */
   public char getGraf() {
@@ -31,6 +33,7 @@ public enum Suit {
 
   /**
    * a method that return a string vlaue of a suit
+   *
    * @return a String
    */
   @Override
@@ -38,4 +41,11 @@ public enum Suit {
     return String.valueOf(graf);
   }
 
+  public boolean isSameType(Suit suit) {
+    return this.graf == suit.graf;
+  }
+
+  public boolean isDifferentColor(Suit suit) {
+    return !(this.color == suit.color);
+  }
 }

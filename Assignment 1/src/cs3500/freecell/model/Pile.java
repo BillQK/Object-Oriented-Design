@@ -21,8 +21,38 @@ public abstract class Pile {
   }
 
   public Card getCardAt(int index) {
+    if (index < 0 || index >= LoC.size()){
+      return null;
+    }
     return LoC.get(index);
   }
 
-  public abstract void add(Card i);
+  public void add(Card i) {
+    LoC.add(i);
+  }
+
+  public Card getTopCard() {
+    return LoC.get(LoC.size() - 1);
+  }
+
+  public abstract boolean canBeAdded(Card i);
+
+  public abstract boolean canAddListCard();
+
+  /**
+   * Check to see the current Pile is compatible with the source pile
+   * @param sourcePile
+   * @return
+   */
+  public abstract boolean validPile(PileType sourcePile);
+
+  public abstract List<Card> getMoveCards(int cardIndex);
+
+  public void remove(Card card) {
+    LoC.remove(card);
+  }
+  public boolean isEmpty() {
+    return LoC.isEmpty();
+  }
+
 }

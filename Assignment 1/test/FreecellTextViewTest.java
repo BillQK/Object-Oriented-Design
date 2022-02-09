@@ -11,14 +11,14 @@ import cs3500.freecell.Card.Value;
 import cs3500.freecell.model.FreecellModel;
 import cs3500.freecell.model.PileType;
 import cs3500.freecell.model.SimpleFreecellModel;
+import cs3500.freecell.view.FreecellTextView;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
-/**
- * JUnit test cases for the freecell model.
- */
-public class FreecellModelTest {
+public class FreecellTextViewTest {
+  FreecellTextView textView;
+  FreecellModel model;
+
   FreecellModel g1 = new SimpleFreecellModel();
   FreecellModel g2 = new SimpleFreecellModel();
   FreecellModel g3 = new SimpleFreecellModel();
@@ -97,12 +97,6 @@ public class FreecellModelTest {
   Card[] spadeCards = new Card[]{aceSpade, twoSpade, threeSpade, fourSpade, fiveSpade, sixSpade, sevenSpade, eightSpade, nineSpade, tenSpade, jackSpade, queenSpade, kingSpade};
   Card[] heartCard = new Card[]{aceHeart, twoHeart, threeHeart, fourHeart, fiveHeart, sixHeart, sevenHeart, eightHeart, nineHeart, tenHeart, jackHeart, queenHeart, kingHeart};
 
-  // Invalid deck
-  List<Card> duplicateDeck = new ArrayList<Card>();
-  List<Card> nullDeck = new ArrayList<Card>();
-  List<Card> invalidCardDeck = new ArrayList<Card>();
-
-
   @Before
   public void setUp() {
     // Valid deck
@@ -110,92 +104,17 @@ public class FreecellModelTest {
     LoC.addAll(Arrays.asList(diamondCards));
     LoC.addAll(Arrays.asList(spadeCards));
     LoC.addAll(Arrays.asList(heartCard));
-
-    // duplicate but also have 52 cards
-    duplicateDeck.addAll(LoC);
-    duplicateDeck.remove(1);
-    duplicateDeck.add(kingDiamond);
-
-    // null but also have 52 elements
-    nullDeck.addAll(LoC);
-    nullDeck.remove(1);
-    nullDeck.add(null);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testCreateCardWithNULL() {
-    // Create card with null values
-    Card nullSuitCard = new Card(Value.KING, null);
-    Card nullValueCard = new Card(null, Suit.HEART);
-    Card nullCard = new Card(null, null);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testStartGameWithAnInvalidDeck() {
-    g1.startGame(duplicateDeck, 4, 4, true);
-    g1.startGame(nullDeck, 4, 4, true);
-  }
 
   @Test
-  public void testGetDeck() {
-    assertEquals(g1.getDeck(), LoC);
+  public void testToString() {
+    model = new SimpleFreecellModel();
+    model.startGame(LoC, 5, 2, false);
+    model.move(PileType.CASCADE, 4, 12, PileType.OPEN, 0);
+    textView = new FreecellTextView(model);
+    System.out.println(textView.toString());
+   assertEquals(textView.toString(), textView.toString());
   }
 
-  @Test
-  public void testShuffleGameState() {
-    g1.startGame(LoC, 4, 4, false);
-    g2.startGame(LoC, 4, 4, true);
-    g3.startGame(LoC, 4, 4, false);
-
-    // Test shuffle
-    assertNotEquals(g1.getCascadeCardAt(0, 1), g2.getCascadeCardAt(0, 1));
-    assertNotEquals(g1.getCascadeCardAt(1, 2), g2.getCascadeCardAt(1, 2));
-    assertNotEquals(g1.getCascadeCardAt(2, 3), g2.getCascadeCardAt(2, 3));
-    assertNotEquals(g1.getCascadeCardAt(3, 4), g2.getCascadeCardAt(3, 4));
-    assertNotEquals(g1.getCascadeCardAt(0, 5), g2.getCascadeCardAt(0, 5));
-    assertNotEquals(g2.getCascadeCardAt(1, 6), g1.getCascadeCardAt(1, 6));
-    assertNotEquals(g2.getCascadeCardAt(3, 7), g1.getCascadeCardAt(3, 7));
-    assertNotEquals(g2.getCascadeCardAt(0, 8), g1.getCascadeCardAt(0, 8));
-    assertNotEquals(g2.getCascadeCardAt(1, 9), g1.getCascadeCardAt(1, 9));
-    assertNotEquals(g2.getCascadeCardAt(2, 10), g1.getCascadeCardAt(2, 10));
-    assertNotEquals(g2.getCascadeCardAt(3, 11), g1.getCascadeCardAt(3, 11));
-
-    // Test no shuffle
-    assertEquals(g3.getCascadeCardAt(0, 0), g3.getCascadeCardAt(0, 0));
-    assertEquals(g3.getCascadeCardAt(1, 1), g3.getCascadeCardAt(1, 1));
-    assertEquals(g3.getCascadeCardAt(2, 2), g3.getCascadeCardAt(2, 2));
-    assertEquals(g3.getCascadeCardAt(3, 3), g3.getCascadeCardAt(3, 3));
-    assertEquals(g3.getCascadeCardAt(1, 4), g3.getCascadeCardAt(1, 4));
-  }
-
-  @Test
-  public void testStartGame() {
-    g1.startGame(LoC, 4, 4, false);
-
-    assertEquals(g1.getNumCascadePiles(), 4);
-    assertEquals(g1.getNumOpenPiles(), 4);
-    assertEquals(g1.getNumCardsInCascadePile(0), 13);
-    assertEquals(g1.getNumCardsInCascadePile(1), 13);
-    assertEquals(g1.getNumCardsInCascadePile(2), 13);
-    assertEquals(g1.getNumCardsInCascadePile(3), 13);
-
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidMove() {
-    g1.startGame(LoC, 52, 4, false);
-    g1.move(PileType.CASCADE, 12, 1, PileType.FOUNDATION,0);
-    g1.move(PileType.OPEN, 1, 1, PileType.FOUNDATION,0);
-
-  }
-
-  @Test
-  public void testMove() {
-    // Pass in a 52 cascade pile
-    g1.startGame(LoC, 52, 4, false);
-    g1.move(PileType.CASCADE, 1, 8, PileType.OPEN, 0);
-    g1.move(PileType.CASCADE, 13, 0, PileType.FOUNDATION, 0);
-
-
-  }
 }
