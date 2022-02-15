@@ -3,8 +3,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * This is a test class for simple thermostat.
+ */
 public class SimpleThermostatTest {
-  double DELTA = Integer.MIN_VALUE;
+  double minValue = Integer.MIN_VALUE;
   Thermostat thermostat1 = new SimpleThermostat("1", 24.0);
   Thermostat thermostat2 = new SimpleThermostat("1", 24.005);
   Thermostat thermostat3 = thermostat2;
@@ -21,19 +24,19 @@ public class SimpleThermostatTest {
 
   @Test
   public void getSetTemperature() {
-    assertEquals(thermostat1.getSetTemperature(), 24.0 + 273.15, DELTA);
+    assertEquals(thermostat1.getSetTemperature(), 24.0 + 273.15, minValue);
   }
 
   @Test
   public void increaseSetTemperature() {
     thermostat1.increaseSetTemperature();
-    assertEquals(thermostat1.getSetTemperature(), 297.25, DELTA);
+    assertEquals(thermostat1.getSetTemperature(), 297.25, minValue);
   }
 
   @Test
   public void decreaseSetTemperature() {
     thermostat2.decreaseSetTemperature();
-    assertEquals(thermostat2.getSetTemperature(), 23.905 + 273.15, DELTA);
+    assertEquals(thermostat2.getSetTemperature(), 23.905 + 273.15, minValue);
   }
 
   @Test

@@ -43,11 +43,29 @@ public class NaiveTemperatureMonitor implements TemperatureMonitor {
     return thermostatList.size();
   }
 
+  //  /**
+  //   * a method that return a true or false value if the one of the thermostat in the monitor list
+  //   * is  overheating, that is greater than 23 Celsius.
+  //   * @return a boolean; if  more than one of thermostat is greater than 23 Celsius return true,
+  //   * else return false.
+  //   */s
+  //  public boolean tooMuchHeating() {
+  //    int count = 0;
+  //    for (Thermostat t : thermostatList) {
+  //      if (t.getSetTemperature() > 23 + 273.15) {
+  //        count += 1;
+  //      }
+  //
+  //    }
+  //    return count > (thermostatList.size() / 2);
+  //  }
+
   /**
    * a method that return a true or false value if the one of the thermostat in the monitor list is
    * overheating, that is greater than 23 Celsius.
-   * @return a boolean; if  more than one of thermostat is greater than 23 Celsius return true, else
-   * return false.
+   *
+   * @return a boolean, if  more than half of thermostats in the monitor list
+   *         is greater than 23 Celsius return true, else return false.
    */
   public boolean tooMuchHeating() {
     int count = 0;
@@ -57,6 +75,6 @@ public class NaiveTemperatureMonitor implements TemperatureMonitor {
       }
 
     }
-    return count > 1;
+    return count > (thermostatList.size() / 2);
   }
 }
