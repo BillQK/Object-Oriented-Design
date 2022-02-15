@@ -6,22 +6,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import cs3500.freecell.model.Card;
+import cs3500.freecell.model.FreecellModel;
+import cs3500.freecell.model.SimpleFreecellModel;
 import cs3500.freecell.model.Suit;
 import cs3500.freecell.model.Value;
-import cs3500.freecell.model.FreecellModel;
-import cs3500.freecell.model.PileType;
-import cs3500.freecell.model.SimpleFreecellModel;
 import cs3500.freecell.view.FreecellTextView;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+/**
+ * A test class for FreeCellTextView.
+ */
 public class FreecellTextViewTest {
   FreecellTextView textView;
   FreecellModel model;
 
-  FreecellModel g1 = new SimpleFreecellModel();
-  FreecellModel g2 = new SimpleFreecellModel();
-  FreecellModel g3 = new SimpleFreecellModel();
   // Card initialized
   Card aceHeart = new Card(Value.ACE, Suit.HEART);
   Card aceSpade = new Card(Value.ACE, Suit.SPADE);
@@ -90,32 +89,43 @@ public class FreecellTextViewTest {
 
 
   // deck initialize
-  List<Card> LoC = new ArrayList<Card>();
+  List<Card> loc = new ArrayList<>();
 
-  Card[] clubCards = new Card[]{aceClub, twoClub, threeClub, fourClub, fiveClub, sixClub, sevenClub, eightClub, nineClub, tenClub, jackClub, queenClub, kingClub};
-  Card[] diamondCards = new Card[]{aceDiamond, twoDiamond, threeDiamond, fourDiamond, fiveDiamond, sixDiamond, sevenDiamond, eightDiamond, nineDiamond, tenDiamond, jackDiamond, queenDiamond, kingDiamond};
-  Card[] spadeCards = new Card[]{aceSpade, twoSpade, threeSpade, fourSpade, fiveSpade, sixSpade, sevenSpade, eightSpade, nineSpade, tenSpade, jackSpade, queenSpade, kingSpade};
-  Card[] heartCard = new Card[]{aceHeart, twoHeart, threeHeart, fourHeart, fiveHeart, sixHeart, sevenHeart, eightHeart, nineHeart, tenHeart, jackHeart, queenHeart, kingHeart};
+  Card[] clubCards = new Card[]{aceClub, twoClub, threeClub, fourClub, fiveClub, sixClub, sevenClub,
+                                eightClub, nineClub, tenClub, jackClub, queenClub, kingClub};
+  Card[] diamondCards = new Card[]{aceDiamond, twoDiamond, threeDiamond, fourDiamond, fiveDiamond,
+                                   sixDiamond, sevenDiamond, eightDiamond, nineDiamond, tenDiamond,
+                                   jackDiamond, queenDiamond, kingDiamond};
+  Card[] spadeCards = new Card[]{aceSpade, twoSpade, threeSpade, fourSpade, fiveSpade, sixSpade,
+                                 sevenSpade, eightSpade, nineSpade, tenSpade, jackSpade, queenSpade,
+                                 kingSpade};
+  Card[] heartCard = new Card[]{aceHeart, twoHeart, threeHeart, fourHeart, fiveHeart, sixHeart,
+                                sevenHeart, eightHeart, nineHeart, tenHeart, jackHeart, queenHeart,
+                                kingHeart};
+
 
   @Before
   public void setUp() {
     // Valid deck
-    LoC.addAll(Arrays.asList(clubCards));
-    LoC.addAll(Arrays.asList(diamondCards));
-    LoC.addAll(Arrays.asList(spadeCards));
-    LoC.addAll(Arrays.asList(heartCard));
+    loc.addAll(Arrays.asList(clubCards));
+    loc.addAll(Arrays.asList(diamondCards));
+    loc.addAll(Arrays.asList(spadeCards));
+    loc.addAll(Arrays.asList(heartCard));
   }
 
 
   @Test
   public void testToString() {
     model = new SimpleFreecellModel();
-    model.startGame(LoC, 5, 2, false);
-    model.move(PileType.CASCADE, 4, 12, PileType.OPEN, 0);
-    model.startGame(LoC, 10,5,false);
+    model.startGame(loc, 5, 2, false);
     textView = new FreecellTextView(model);
     System.out.println(textView.toString());
-   assertEquals(textView.toString(), textView.toString());
+    assertEquals(textView.toString(), "F1:\n" + "F2:\n" + "F3:\n" + "F4:\n" + "O1:\n"
+            + "O2:\n" + "C1: A♣, 6♣, J♣, 3♦, 8♦, K♦, 5♠, 10♠, 2♥, 7♥, Q♥\n"
+            + "C2: 2♣, 7♣, Q♣, 4♦, 9♦, A♠, 6♠, J♠, 3♥, 8♥, K♥\n"
+            + "C3: 3♣, 8♣, K♣, 5♦, 10♦, 2♠, 7♠, Q♠, 4♥, 9♥\n"
+            + "C4: 4♣, 9♣, A♦, 6♦, J♦, 3♠, 8♠, K♠, 5♥, 10♥\n"
+            + "C5: 5♣, 10♣, 2♦, 7♦, Q♦, 4♠, 9♠, A♥, 6♥, J♥");
   }
 
 }

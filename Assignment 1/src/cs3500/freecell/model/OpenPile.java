@@ -28,14 +28,14 @@ public class OpenPile extends Pile {
   }
 
   /**
-   * A method that determines if the given PileType is compatible with Open PileType
+   * A method that determines if the given PileType is compatible with Open PileType.
    *
    * @param sourcePile a PileType
    * @return a boolean
    */
   @Override
   public boolean validPile(PileType sourcePile) {
-    return sourcePile == PileType.CASCADE;
+    return sourcePile == PileType.CASCADE || sourcePile == PileType.OPEN;
   }
 
 

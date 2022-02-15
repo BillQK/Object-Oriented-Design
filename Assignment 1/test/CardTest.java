@@ -9,7 +9,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * A Test for card class
+ * A Test for card class.
  */
 public class CardTest {
 
@@ -145,6 +145,7 @@ public class CardTest {
   public void isValidToAddToCascade() {
     assertTrue(kingHeart.isValidToAddToCascade(queenSpade));
     assertTrue(threeHeart.isValidToAddToCascade(twoSpade));
+    assertTrue(threeDiamond.isValidToAddToCascade(twoClub));
   }
 
   @Test

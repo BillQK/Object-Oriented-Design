@@ -45,7 +45,9 @@ public abstract class Pile {
    * @param i a Card
    */
   public void add(Card i) {
-    loc.add(i);
+    if (i != null) {
+      loc.add(i);
+    }
   }
 
   /**
@@ -54,6 +56,9 @@ public abstract class Pile {
    * @return a Card
    */
   public Card getTopCard() {
+    if (isEmpty()) {
+      throw new IllegalStateException("Pile is empty");
+    }
     return loc.get(loc.size() - 1);
   }
 

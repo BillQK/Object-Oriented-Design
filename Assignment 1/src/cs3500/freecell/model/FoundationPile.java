@@ -20,8 +20,13 @@ public class FoundationPile extends Pile {
    */
   @Override
   public boolean canBeAdded(Card i) {
-    if (loc.isEmpty() && i.isAnAce()) return true;
-    return (!loc.isEmpty() && getTopCard().isValidToAddToFoundation(i));
+    if (loc.isEmpty() && i.isAnAce()) {
+      return true;
+    } else if (loc.isEmpty() && !i.isAnAce()) {
+      throw new IllegalArgumentException("Can only add an ace to an empty Foundation Pile");
+    } else {
+      return (!loc.isEmpty() && getTopCard().isValidToAddToFoundation(i));
+    }
   }
 
   /**
@@ -35,9 +40,5 @@ public class FoundationPile extends Pile {
     return sourcePile == PileType.CASCADE || sourcePile == PileType.OPEN;
   }
 
-
-  public boolean isFull() {
-    return loc.size() == 13;
-  }
 
 }

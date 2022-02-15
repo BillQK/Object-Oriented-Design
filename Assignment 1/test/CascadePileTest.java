@@ -10,6 +10,9 @@ import cs3500.freecell.model.Value;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * a test class cascade pile.
+ */
 public class CascadePileTest {
   /**
    * Initialize the Pile.
@@ -30,7 +33,7 @@ public class CascadePileTest {
   }
 
   @Test
-  public void validPile() {
+  public void testValidPile() {
     // Cascade can be added to Cascade
     // Open can be added to Cascade
     assertTrue(cascadePile.validPile(PileType.CASCADE));

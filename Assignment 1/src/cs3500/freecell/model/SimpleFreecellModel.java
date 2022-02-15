@@ -390,11 +390,11 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
     }
     if (listOfCascadePiles.size() <= pileIndex || pileIndex < 0) {
       throw new IllegalArgumentException("Out of bound arguments: Pile Index"
-              + (listOfCascadePiles.size() - 1) + "out of " + pileIndex);
+              + (listOfCascadePiles.size() - 1) + " out of " + pileIndex);
     }
     if (listOfCascadePiles.get(pileIndex).numberOfCards() <= cardIndex || cardIndex < 0) {
       throw new IllegalArgumentException("Out of bound arguments: Card Index"
-              + (listOfCascadePiles.get(pileIndex).numberOfCards() - 1) + cardIndex);
+              + (listOfCascadePiles.get(pileIndex).numberOfCards() - 1) + " out of " + cardIndex);
     } else {
       Card cardAtIndex;
       Pile pile = listOfCascadePiles.get(pileIndex);

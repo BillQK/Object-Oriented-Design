@@ -2,8 +2,13 @@ import org.junit.Test;
 
 import cs3500.freecell.model.Suit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+/**
+ * a test class for suit.
+ */
 public class SuitTest {
   Suit heart = Suit.HEART;
   Suit spade = Suit.SPADE;

@@ -6,6 +6,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * A test for value.
+ */
 public class ValueTest {
   Value ace = Value.ACE;
   Value two = Value.TWO;
@@ -85,12 +88,13 @@ public class ValueTest {
     assertTrue(queen.isOneGreater(king));
 
     assertFalse(ace.isOneGreater(ace));
-
   }
 
   @Test
   public void isOneLower() {
     assertTrue(two.isOneSmaller(ace));
     assertTrue(king.isOneSmaller(queen));
+    assertTrue(queen.isOneSmaller(jack));
+    assertTrue(two.isOneSmaller(ace));
   }
 }

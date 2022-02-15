@@ -10,6 +10,7 @@ public class FreecellTextView implements FreecellView {
 
   /**
    * A constructor of FreecellTextview.
+   *
    * @param model a given FreecellModelState
    * @throws IllegalStateException if the model is null
    */
@@ -45,57 +46,111 @@ public class FreecellTextView implements FreecellView {
    */
   @Override
   public String toString() {
+    try {
+      model.getNumOpenPiles();
+      model.getNumCascadePiles();
+      model.getNumCardsInFoundationPile(0);
+    } catch (IllegalStateException e) {
+      return "";
+    }
     return getString(model);
   }
 
+
   /**
    * a Helper method for toString() that compiles the information from the model.
-   * @param m a FreecellModelState
+   *
+   * @param m   a FreecellModelState
    * @param <T> Card
    * @return a String
    */
   private <T> String getString(FreecellModelState<T> m) {    // "capture" the wildcard
+    String open;
+    String foundation;
+    String cascade;
     String view = "";
-    String foundation = "";
-    String open = "";
-    String cascade = "";
+
+    open = buildOpenString(m);
+    foundation = buildFoundationString(m);
+    cascade = buildCascadeString(m);
+
+    view = foundation + open + cascade;
+
+    return view;
+  }
+
+  /**
+   * A method that return a Cascade String.
+   * @param m a free cell model state
+   * @param <T> Card
+   * @return a String
+   */
+  private <T> String buildCascadeString(FreecellModelState<T> m) {
+    String ans = "";
+    for (int i = 0; i < m.getNumCascadePiles(); i++) {
+      String cards = "";
+      for (int j = 0; j < m.getNumCardsInCascadePile(i); j++) {
+        T s = m.getCascadeCardAt(i, j);
+        cards += " " + s.toString() + ",";
+      }
+      String a = "";
+      if (cards.length() > 1) {
+        a = cards.substring(0, cards.length() - 1);
+      }
+      String row = "C" + (i + 1) + ":" + a;
+      ans += row + "\n";
+    }
+    ans = ans.substring(0, ans.length() - 1);
+    return ans;
+  }
+
+  /**
+   * A method that return a foundation string.
+   * @param m a freecell model state
+   * @param <T> Card
+   * @return a String
+   */
+  private <T> String buildFoundationString(FreecellModelState<T> m) {
+    String ans = "";
+    for (int i = 0; i < 4; i++) {
+      String cards = "";
+      for (int j = 0; j < m.getNumCardsInFoundationPile(i); j++) {
+        if (m.getNumCardsInFoundationPile(i) == 0) {
+          cards += "";
+        } else {
+          cards += " " + m.getFoundationCardAt(i, j).toString() + ",";
+        }
+      }
+      String a = "";
+      if (cards.length() > 1) {
+        a = cards.substring(0, cards.length() - 1);
+      }
+      String row = "F" + (i + 1) + ":" + a;
+      ans += row + "\n";
+    }
+    return ans;
+  }
+
+  /**
+   * a method return a Open pile String.
+   * @param m a freecell model state
+   * @param <T> Card
+   * @return a String
+   */
+  private <T> String buildOpenString(FreecellModelState<T> m) {
+    String ans = "";
     for (int i = 0; i < m.getNumOpenPiles(); i++) {
       String card;
       if (m.getOpenCardAt(i) == null) {
         card = "";
       } else {
-        card = m.getOpenCardAt(i).toString();
+        card = " " + m.getOpenCardAt(i).toString();
       }
-      String row = "O" + (i + 1) + ": " + card;
-      open += row + "\r\n";
+      String row = "O" + (i + 1) + ":" + card;
+      ans += row + "\n";
     }
-
-
-    for (int i = 0; i < m.getNumCascadePiles(); i++) {
-      String cards = "";
-      for (int j = 0; j < m.getNumCardsInCascadePile(i); j++) {
-        cards += m.getCascadeCardAt(i, j).toString() + ", ";
-      }
-      if (cards.length() > 0) {
-        cards = cards.substring(0, cards.length() - 2);
-      }
-      String row = "C" + (i + 1) + ": " + cards;
-      cascade += row + "\r\n";
-    }
-
-    for (int i = 0; i < 4; i++) {
-      String cards = "";
-      for (int j = 0; j < m.getNumCardsInFoundationPile(i); i++) {
-        cards += m.getFoundationCardAt(i, j).toString() + ", ";
-      }
-      if (cards.length() > 0) {
-        cards = cards.substring(0, cards.length() - 2);
-      }
-      String row = "F" + (i + 1) + ": " + cards;
-      foundation += row + "\r\n";
-    }
-    view += foundation + open + cascade;
-
-    return view.toString();  // can call toString here
+    return ans;
   }
+
+
 }
