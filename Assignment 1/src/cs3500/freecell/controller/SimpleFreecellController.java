@@ -56,15 +56,15 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
       while (!model.isGameOver()) {
         ArrayList<String> commandSequence = new ArrayList<>();
 
-        try {
-          String str = scan.next();
-          if (str.toLowerCase().equals("q")) {
-            view.renderMessage("Game Quit Prematurely");
-            return;
-          }
-        } catch (IllegalArgumentException illegalArgumentException) {
-          view.renderMessage("Game is still running");
-        }
+//        try {
+//          String str = scan.next();
+//          if (str.toLowerCase().equals("q")) {
+//            view.renderMessage("Game Quit Prematurely");
+//            return;
+//          }
+//        } catch (IllegalArgumentException illegalArgumentException) {
+//          view.renderMessage("Game is still running");
+//        }
 
         String a, c;
         int b;
@@ -117,6 +117,9 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
           destPileNum = toPileNum(commandSequence.get(2));
           model.move(sourcePile, sourcePileNum, cardIndex, destPile, destPileNum);
           view.renderBoard();
+        }
+        else {
+          commandSequence.clear();
         }
 
 
