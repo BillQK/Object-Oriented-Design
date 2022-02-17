@@ -1,5 +1,7 @@
 package cs3500.freecell.view;
 
+import java.io.IOException;
+
 /**
  * Represents a way of presenting the game of freecell in a form useful to end users, i.e., a
  * human-readable form.
@@ -30,4 +32,18 @@ public interface FreecellView {
    * @return the formatted string as above
    */
   String toString();
+
+  /**
+   * Render the board to the provided data destination. The board should be rendered exactly
+   * in the format produced by the toString method above
+   * @throws IOException if transmission of the board to the provided data destination fails
+   */
+  void renderBoard() throws IOException;
+
+  /**
+   * Render a specific message to the provided data destination.
+   * @param message the message to be transmitted
+   * @throws IOException if transmission of the board to the provided data destination fails
+   */
+  void renderMessage(String message) throws IOException;
 }

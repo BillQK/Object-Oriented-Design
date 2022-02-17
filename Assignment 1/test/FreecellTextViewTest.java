@@ -113,13 +113,19 @@ public class FreecellTextViewTest {
     loc.addAll(Arrays.asList(heartCard));
   }
 
+  @Test
+  public void testEmptyString() {
+    model = new SimpleFreecellModel();
+    textView = new FreecellTextView(model, new StringBuilder());
+    assertEquals(textView.toString(), "");
+  }
+
 
   @Test
   public void testToString() {
     model = new SimpleFreecellModel();
     model.startGame(loc, 5, 2, false);
-    textView = new FreecellTextView(model);
-    System.out.println(textView.toString());
+    textView = new FreecellTextView(model, new StringBuilder());
     assertEquals(textView.toString(), "F1:\n" + "F2:\n" + "F3:\n" + "F4:\n" + "O1:\n"
             + "O2:\n" + "C1: A♣, 6♣, J♣, 3♦, 8♦, K♦, 5♠, 10♠, 2♥, 7♥, Q♥\n"
             + "C2: 2♣, 7♣, Q♣, 4♦, 9♦, A♠, 6♠, J♠, 3♥, 8♥, K♥\n"
