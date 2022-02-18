@@ -20,7 +20,8 @@ public interface FreecellController<K> {
    * @param numCascades the number of cascade piles
    * @param numOpens    the number of open piles
    * @param shuffle     shuffle the deck if true, false otherwise
-   * @throws IllegalStateException if writing to the Appendable object used by it fails or reading from the provided Readable fails
+   * @throws IllegalStateException if writing to the Appendable object used by it fails or reading
+   *                               from the provided Readable fails
    * @throws IllegalArgumentException if the deck provided to it are null
    */
   void playGame(List<K> deck, int numCascades, int numOpens, boolean shuffle) throws IOException;

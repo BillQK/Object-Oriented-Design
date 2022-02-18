@@ -14,21 +14,26 @@ import cs3500.freecell.view.FreecellView;
 public class SimpleFreecellController<Card> implements FreecellController<Card> {
   private final FreecellView view;
   private final FreecellModel<Card> model;
-  private final Readable input;
   private final Appendable output;
   private final Scanner scan;
 
 
   public SimpleFreecellController(FreecellModel<Card> model, Readable rd, Appendable ap) {
-    if (model == null || rd == null || ap == null) {
+    if (model == null) {
       throw new IllegalArgumentException("Invalid the arguments");
-    } else {
-      this.model = model;
-      this.input = rd;
-      this.output = ap;
     }
+    if (rd == null) {
+      throw new IllegalArgumentException("Invalid readable");
+    }
+    if (ap == null) {
+      throw new IllegalArgumentException("Invalid appendable");
+    }
+    this.model = model;
+    this.output = ap;
+
     this.view = new FreecellTextView(model, output);
     this.scan = new Scanner(rd);
+
   }
 
   /**
@@ -44,30 +49,24 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
    * @throws IllegalArgumentException if the deck provided to it are null
    */
   @Override
-  public void playGame(List<Card> deck, int numCascades, int numOpens, boolean shuffle) throws IOException {
+  public void playGame(List<Card> deck, int numCascades, int numOpens, boolean shuffle) {
     if (deck == null) {
       throw new IllegalArgumentException("The deck cannot be null.");
     }
     try {
       model.startGame(deck, numCascades, numOpens, shuffle);
+    } catch (IllegalArgumentException illegalArgumentException) {
+      view.renderMessage("Invalid number of Cascade or Opens Piles");
+    }
+    try {
+
       view.renderBoard();
       ArrayList<String> commandSequence = new ArrayList<>();
       while (!model.isGameOver()) {
 
-
-//        try {
-//          String str = scan.next();
-//          if (str.toLowerCase().equals("q")) {
-//            view.renderMessage("Game Quit Prematurely");
-//            return;
-//          }
-//        } catch (IllegalArgumentException illegalArgumentException) {
-//          view.renderMessage("Game is still running");
-//        }
-
-        String a, c;
-        String b;
-        while (!scan.hasNext()) {
+        String a, b, c;
+        if (!scan.hasNext()) {
+          view.renderMessage("Please enter another input");
           return;
         }
 
@@ -76,8 +75,8 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
             a = scan.next();
             if (isValidInput(a)) {
               commandSequence.add(a);
-            } else if (a.toLowerCase().equals("q")) {
-              view.renderMessage("Game Quit Prematurely");
+            } else if (a.equalsIgnoreCase("q")) {
+              view.renderMessage("Game quit prematurely.");
               return;
             }
           } catch (InputMismatchException ime) {
@@ -88,10 +87,10 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
         while (commandSequence.size() == 1) {
           try {
             b = scan.next();
-            if (isInterger(b)) {
+            if (isInteger(b)) {
               commandSequence.add(b);
-            } else if (b.toLowerCase().equals("q")) {
-              view.renderMessage("Game Quit Prematurely");
+            } else if (b.equalsIgnoreCase("q")) {
+              view.renderMessage("Game quit prematurely.");
               return;
             }
           } catch (NumberFormatException ime) {
@@ -104,8 +103,8 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
             c = scan.next();
             if (isValidInput(c)) {
               commandSequence.add(c);
-            } else if (c.toLowerCase().equals("q")) {
-              view.renderMessage("Game Quit Prematurely");
+            } else if (c.equalsIgnoreCase("q")) {
+              view.renderMessage("Game quit prematurely.");
               return;
             }
           } catch (InputMismatchException ime) {
@@ -132,20 +131,17 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
         }
 
       }
-
-
-    } catch (IOException ioException) {
+      view.renderMessage("Game over.");
+    } catch (IOException e) {
       view.renderMessage("Could not start game");
     }
 
   }
 
-  private boolean isInterger(String b) {
+  private boolean isInteger(String b) {
     try {
       Integer.parseInt(b);
-    } catch (NumberFormatException e) {
-      return false;
-    } catch (NullPointerException e) {
+    } catch (NumberFormatException | NullPointerException e) {
       return false;
     }
 
@@ -170,7 +166,7 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
   }
 
   private boolean isValidInput(String a) {
-    return a.length() >= 2 && goodInput(a.charAt(0)) && Integer.parseInt(a.substring(1)) >= 0;
+    return a.length() >= 2 && goodInput(a.charAt(0)) && isInteger(a.substring(1));
   }
 
 

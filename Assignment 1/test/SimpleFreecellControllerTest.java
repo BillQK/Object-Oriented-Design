@@ -26,7 +26,13 @@ public class SimpleFreecellControllerTest {
     assertEquals(model.getOpenCardAt(0), new Card(Value.ACE, Suit.CLUB));
   }
 
-  public void testBadInputs() throws IOException {
+  @Test
+  public void testGameOverPlayGame() {
 
+  }
+
+  @Test
+  public void testBadInputs() throws IOException {
+    
   }
 }

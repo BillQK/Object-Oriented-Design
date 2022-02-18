@@ -9,23 +9,25 @@ import cs3500.freecell.model.FreecellModelState;
  */
 public class FreecellTextView implements FreecellView {
   private final FreecellModelState<?> model;
-  private final Appendable output;
+  private Appendable output;
 
 
   /**
    * A constructor of FreecellTextview.
    *
-   * @param output
    * @param model a given FreecellModelState
-   * @param output
    * @throws IllegalStateException if the model is null
    */
-  public FreecellTextView(FreecellModelState<?> model, Appendable output) {
+  public FreecellTextView(FreecellModelState<?> model) {
     if (model == null) {
       throw new IllegalArgumentException("Model can't be null");
     }
-    this.output = output;
     this.model = model;
+  }
+
+  public FreecellTextView(FreecellModelState<?> model, Appendable output) {
+    this(model);
+    this.output = output;
   }
 
   /**
@@ -70,8 +72,13 @@ public class FreecellTextView implements FreecellView {
    * @throws IOException if transmission of the board to the provided data destination fails
    */
   @Override
-  public void renderBoard() throws IOException {
-     output.append(this.toString() + "\n");
+  public void renderBoard(){
+    try {
+      output.append(this.toString() + "\n");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
   }
 
   /**
@@ -81,8 +88,12 @@ public class FreecellTextView implements FreecellView {
    * @throws IOException if transmission of the board to the provided data destination fails
    */
   @Override
-  public void renderMessage(String message) throws IOException {
-    output.append(message + "\n");
+  public void renderMessage(String message) {
+    try {
+      output.append(message + "\n");
+    } catch (IOException e){
+      e.printStackTrace();
+    }
   }
 
 
@@ -110,7 +121,8 @@ public class FreecellTextView implements FreecellView {
 
   /**
    * A method that return a Cascade String.
-   * @param m a free cell model state
+   *
+   * @param m   a free cell model state
    * @param <T> Card
    * @return a String
    */
@@ -135,7 +147,8 @@ public class FreecellTextView implements FreecellView {
 
   /**
    * A method that return a foundation string.
-   * @param m a freecell model state
+   *
+   * @param m   a freecell model state
    * @param <T> Card
    * @return a String
    */
@@ -162,7 +175,8 @@ public class FreecellTextView implements FreecellView {
 
   /**
    * a method return a Open pile String.
-   * @param m a freecell model state
+   *
+   * @param m   a freecell model state
    * @param <T> Card
    * @return a String
    */
