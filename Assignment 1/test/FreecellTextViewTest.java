@@ -120,6 +120,11 @@ public class FreecellTextViewTest {
     assertEquals(textView.toString(), "");
   }
 
+  @Test
+  public void testRenderBoard() {
+
+  }
+
 
   @Test
   public void testToString() {

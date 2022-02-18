@@ -44,17 +44,16 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
    * @throws IllegalArgumentException if the deck provided to it are null
    */
   @Override
-  public void playGame(List<Card> deck, int numCascades, int numOpens, boolean shuffle)
-          throws IOException {
+  public void playGame(List<Card> deck, int numCascades, int numOpens, boolean shuffle) throws IOException {
     if (deck == null) {
       throw new IllegalArgumentException("The deck cannot be null.");
     }
     try {
       model.startGame(deck, numCascades, numOpens, shuffle);
       view.renderBoard();
-
+      ArrayList<String> commandSequence = new ArrayList<>();
       while (!model.isGameOver()) {
-        ArrayList<String> commandSequence = new ArrayList<>();
+
 
 //        try {
 //          String str = scan.next();
@@ -67,14 +66,19 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
 //        }
 
         String a, c;
-        int b;
-
+        String b;
+        while (!scan.hasNext()) {
+          return;
+        }
 
         while (commandSequence.size() == 0) {
           try {
             a = scan.next();
             if (isValidInput(a)) {
               commandSequence.add(a);
+            } else if (a.toLowerCase().equals("q")) {
+              view.renderMessage("Game Quit Prematurely");
+              return;
             }
           } catch (InputMismatchException ime) {
             tryCatch("Invalid String: " + scan.next() + "\n");
@@ -83,10 +87,14 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
 
         while (commandSequence.size() == 1) {
           try {
-            b = scan.nextInt();
-
-            commandSequence.add(String.valueOf(b));
-          } catch (InputMismatchException ime) {
+            b = scan.next();
+            if (isInterger(b)) {
+              commandSequence.add(b);
+            } else if (b.toLowerCase().equals("q")) {
+              view.renderMessage("Game Quit Prematurely");
+              return;
+            }
+          } catch (NumberFormatException ime) {
             tryCatch("Invalid Integer: " + scan.next() + "\n");
           }
         }
@@ -96,6 +104,9 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
             c = scan.next();
             if (isValidInput(c)) {
               commandSequence.add(c);
+            } else if (c.toLowerCase().equals("q")) {
+              view.renderMessage("Game Quit Prematurely");
+              return;
             }
           } catch (InputMismatchException ime) {
             tryCatch("Invalid String: " + scan.next() + "\n");
@@ -112,29 +123,37 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
         if (commandSequence.size() == 3) {
           sourcePile = toPile(commandSequence.get(0));
           sourcePileNum = toPileNum(commandSequence.get(0));
-          cardIndex = Integer.parseInt(commandSequence.get(1));
+          cardIndex = Integer.parseInt(commandSequence.get(1)) - 1;
           destPile = toPile(commandSequence.get(2));
           destPileNum = toPileNum(commandSequence.get(2));
           model.move(sourcePile, sourcePileNum, cardIndex, destPile, destPileNum);
+          commandSequence.clear();
           view.renderBoard();
         }
-        else {
-          commandSequence.clear();
-        }
-
 
       }
 
 
     } catch (IOException ioException) {
       view.renderMessage("Could not start game");
-      return;
     }
 
   }
 
+  private boolean isInterger(String b) {
+    try {
+      Integer.parseInt(b);
+    } catch (NumberFormatException e) {
+      return false;
+    } catch (NullPointerException e) {
+      return false;
+    }
+
+    return true;
+  }
+
   private int toPileNum(String s) {
-    return Integer.parseInt(s.substring(1, s.length())) - 1;
+    return Integer.parseInt(s.substring(1)) - 1;
   }
 
   private PileType toPile(String s) throws IOException {
@@ -151,8 +170,7 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
   }
 
   private boolean isValidInput(String a) {
-    return a.length() >= 2 && goodInput(a.charAt(0))
-            && Integer.parseInt(a.substring(1, a.length())) >= 0;
+    return a.length() >= 2 && goodInput(a.charAt(0)) && Integer.parseInt(a.substring(1)) >= 0;
   }
 
 
