@@ -14,13 +14,12 @@ import cs3500.freecell.view.FreecellView;
 public class SimpleFreecellController<Card> implements FreecellController<Card> {
   private final FreecellView view;
   private final FreecellModel<Card> model;
-  private final Appendable output;
   private final Scanner scan;
 
 
   public SimpleFreecellController(FreecellModel<Card> model, Readable rd, Appendable ap) {
     if (model == null) {
-      throw new IllegalArgumentException("Invalid the arguments");
+      throw new IllegalArgumentException("Invalid model");
     }
     if (rd == null) {
       throw new IllegalArgumentException("Invalid readable");
@@ -29,9 +28,7 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
       throw new IllegalArgumentException("Invalid appendable");
     }
     this.model = model;
-    this.output = ap;
-
-    this.view = new FreecellTextView(model, output);
+    this.view = new FreecellTextView(model, ap);
     this.scan = new Scanner(rd);
 
   }
@@ -55,8 +52,12 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
     }
     try {
       model.startGame(deck, numCascades, numOpens, shuffle);
-    } catch (IllegalArgumentException illegalArgumentException) {
-      view.renderMessage("Invalid number of Cascade or Opens Piles");
+    } catch (IllegalArgumentException e) {
+      try {
+        view.renderMessage("Could not start game.");
+      } catch (IOException ioException) {
+        throw new IllegalStateException("Appendable cannot append");
+      }
     }
     try {
 
@@ -66,8 +67,7 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
 
         String a, b, c;
         if (!scan.hasNext()) {
-          view.renderMessage("Please enter another input");
-          return;
+          throw new IllegalStateException("Readable does not have anymore elements");
         }
 
         while (commandSequence.size() == 0) {
@@ -76,11 +76,11 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
             if (isValidInput(a)) {
               commandSequence.add(a);
             } else if (a.equalsIgnoreCase("q")) {
-              view.renderMessage("Game quit prematurely.");
+              view.renderMessage("Game quit prematurely." + "\n");
               return;
             }
-          } catch (InputMismatchException ime) {
-            tryCatch("Invalid String: " + scan.next() + "\n");
+          } catch (InputMismatchException e) {
+            view.renderMessage("Invalid String: " + scan.next() + "\n");
           }
         }
 
@@ -90,25 +90,26 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
             if (isInteger(b)) {
               commandSequence.add(b);
             } else if (b.equalsIgnoreCase("q")) {
-              view.renderMessage("Game quit prematurely.");
+              view.renderMessage("Game quit prematurely." + "\n");
               return;
             }
-          } catch (NumberFormatException ime) {
-            tryCatch("Invalid Integer: " + scan.next() + "\n");
+          } catch (InputMismatchException e) {
+            view.renderMessage("Invalid String: " + scan.next() + "\n");
           }
         }
 
         while (commandSequence.size() == 2) {
           try {
+
             c = scan.next();
             if (isValidInput(c)) {
               commandSequence.add(c);
             } else if (c.equalsIgnoreCase("q")) {
-              view.renderMessage("Game quit prematurely.");
+              view.renderMessage("Game quit prematurely." + "\n");
               return;
             }
-          } catch (InputMismatchException ime) {
-            tryCatch("Invalid String: " + scan.next() + "\n");
+          } catch (InputMismatchException e) {
+            view.renderMessage("Invalid String: " + scan.next() + "\n");
           }
         }
 
@@ -118,22 +119,26 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
         PileType destPile;
         int destPileNum;
 
-
-        if (commandSequence.size() == 3) {
-          sourcePile = toPile(commandSequence.get(0));
-          sourcePileNum = toPileNum(commandSequence.get(0));
-          cardIndex = Integer.parseInt(commandSequence.get(1)) - 1;
-          destPile = toPile(commandSequence.get(2));
-          destPileNum = toPileNum(commandSequence.get(2));
-          model.move(sourcePile, sourcePileNum, cardIndex, destPile, destPileNum);
+        try {
+          if (commandSequence.size() == 3) {
+            sourcePile = toPile(commandSequence.get(0));
+            sourcePileNum = toPileNum(commandSequence.get(0));
+            cardIndex = Integer.parseInt(commandSequence.get(1)) - 1;
+            destPile = toPile(commandSequence.get(2));
+            destPileNum = toPileNum(commandSequence.get(2));
+            model.move(sourcePile, sourcePileNum, cardIndex, destPile, destPileNum);
+            commandSequence.clear();
+            view.renderBoard();
+          }
+        } catch (IllegalArgumentException illegalArgumentException) {
           commandSequence.clear();
-          view.renderBoard();
+          view.renderMessage("Invalid moves" + "\n");
         }
 
       }
-      view.renderMessage("Game over.");
+      view.renderMessage("Game over." + "\n");
     } catch (IOException e) {
-      view.renderMessage("Could not start game");
+      throw new IllegalStateException("Not able to Append");
     }
 
   }
@@ -144,7 +149,6 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
     } catch (NumberFormatException | NullPointerException e) {
       return false;
     }
-
     return true;
   }
 
@@ -165,28 +169,22 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
     }
   }
 
-  private boolean isValidInput(String a) {
+  private boolean isValidInput(String a) throws IOException {
     return a.length() >= 2 && goodInput(a.charAt(0)) && isInteger(a.substring(1));
   }
 
 
-  private boolean goodInput(char charAt) {
+  private boolean goodInput(char charAt) throws IOException {
     switch (charAt) {
       case 'C':
       case 'F':
       case 'O':
         return true;
       default:
-        return false;
+        throw new IOException("Bad Input");
     }
 
   }
 
-  private void tryCatch(String s) {
-    try {
-      output.append(s);
-    } catch (IOException ioException) {
-      ioException.printStackTrace();
-    }
-  }
+
 }

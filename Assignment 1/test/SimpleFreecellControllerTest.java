@@ -27,12 +27,30 @@ public class SimpleFreecellControllerTest {
   }
 
   @Test
-  public void testGameOverPlayGame() {
+  public void testRandomInput() throws IOException {
+    FreecellModel<Card> model = new SimpleFreecellModel();
+    // C1, 15, and O3
+    Readable input = new StringReader("G431asdf jas 23 C1 fdsawe Fasdf D1 15 Or2 O3");
+    Appendable outputlog = new StringBuilder();
+    FreecellController<Card> controller = new SimpleFreecellController<>(model, input, outputlog);
+    controller.playGame(model.getDeck(), 52, 4, false);
+    assertEquals(model.getOpenCardAt(2), new Card(Value.ACE, Suit.CLUB));
+    assertEquals(model.getNumCardsInCascadePile(0), 0);
+  }
+
+  @Test
+  public void testGameOverPlayGame() throws IOException {
+    FreecellModel<Card> model = new SimpleFreecellModel();
+    Readable input = new StringReader("");
+    Appendable outputlog = new StringBuilder();//    Readable input = new StringReader("C-1");
+    FreecellController<Card> controller = new SimpleFreecellController<>(model,input, outputlog);
+    controller.playGame(model.getDeck(), 2, 4, false);
+    assertEquals(outputlog, "Invalid moves");
 
   }
 
   @Test
   public void testBadInputs() throws IOException {
-    
+
   }
 }

@@ -234,7 +234,7 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
       throw new IllegalArgumentException("Invalid source pile. No Cards Available");
     }
 
-    // Round robin card-dealt fashion
+
     if (destPile.canBeAdded(sourcePile.getTopCard())) {
       destPile.add(sourcePile.getTopCard());
       sourcePile.remove(sourcePile.getTopCard());
@@ -389,11 +389,12 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
       throw new IllegalStateException("Game not started!!");
     }
     if (listOfCascadePiles.size() <= pileIndex || pileIndex < 0) {
-      throw new IllegalArgumentException("Out of bound arguments: Pile Index"
+      throw new IllegalArgumentException("Out of bound arguments: Pile Index "
               + (listOfCascadePiles.size() - 1) + " out of " + pileIndex);
     }
+
     if (listOfCascadePiles.get(pileIndex).numberOfCards() <= cardIndex || cardIndex < 0) {
-      throw new IllegalArgumentException("Out of bound arguments: Card Index"
+      throw new IllegalArgumentException("Out of bound arguments: Card Index "
               + (listOfCascadePiles.get(pileIndex).numberOfCards() - 1) + " out of " + cardIndex);
     } else {
       Card cardAtIndex;

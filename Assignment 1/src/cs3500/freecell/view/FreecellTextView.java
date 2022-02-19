@@ -72,12 +72,8 @@ public class FreecellTextView implements FreecellView {
    * @throws IOException if transmission of the board to the provided data destination fails
    */
   @Override
-  public void renderBoard(){
-    try {
-      output.append(this.toString() + "\n");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  public void renderBoard() throws IOException {
+    output.append(this.toString() + "\n");
 
   }
 
@@ -88,12 +84,9 @@ public class FreecellTextView implements FreecellView {
    * @throws IOException if transmission of the board to the provided data destination fails
    */
   @Override
-  public void renderMessage(String message) {
-    try {
-      output.append(message + "\n");
-    } catch (IOException e){
-      e.printStackTrace();
-    }
+  public void renderMessage(String message) throws IOException {
+    output.append(message);
+
   }
 
 

@@ -3,8 +3,6 @@ package cs3500.freecell.controller;
 import java.io.IOException;
 import java.util.List;
 
-import cs3500.freecell.model.FreecellModel;
-
 /**
  * Interface for the freecell game controller. An implementation will work with
  * the IFreeCellModel interface to provide a game of freecell
@@ -20,8 +18,8 @@ public interface FreecellController<K> {
    * @param numCascades the number of cascade piles
    * @param numOpens    the number of open piles
    * @param shuffle     shuffle the deck if true, false otherwise
-   * @throws IllegalStateException if writing to the Appendable object used by it fails or reading
-   *                               from the provided Readable fails
+   * @throws IllegalStateException    if writing to the Appendable object used by it fails or reading
+   *                                  from the provided Readable fails
    * @throws IllegalArgumentException if the deck provided to it are null
    */
   void playGame(List<K> deck, int numCascades, int numOpens, boolean shuffle) throws IOException;
