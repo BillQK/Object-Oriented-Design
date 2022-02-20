@@ -22,6 +22,6 @@ public interface FreecellController<K> {
    *                                  from the provided Readable fails
    * @throws IllegalArgumentException if the deck provided to it are null
    */
-  void playGame(List<K> deck, int numCascades, int numOpens, boolean shuffle) throws IOException;
+  void playGame(List<K> deck, int numCascades, int numOpens, boolean shuffle);
 
 }

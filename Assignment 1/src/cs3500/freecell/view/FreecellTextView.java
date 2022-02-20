@@ -73,7 +73,7 @@ public class FreecellTextView implements FreecellView {
    */
   @Override
   public void renderBoard() throws IOException {
-    output.append(this.toString() + "\n");
+    output.append(this.toString()).append("\n");
 
   }
 
@@ -85,8 +85,7 @@ public class FreecellTextView implements FreecellView {
    */
   @Override
   public void renderMessage(String message) throws IOException {
-    output.append(message);
-
+      output.append(message);
   }
 
 
@@ -101,7 +100,7 @@ public class FreecellTextView implements FreecellView {
     String open;
     String foundation;
     String cascade;
-    String view = "";
+    String view;
 
     open = buildOpenString(m);
     foundation = buildFoundationString(m);

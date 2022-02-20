@@ -125,6 +125,11 @@ public class FreecellTextViewTest {
 
   }
 
+  @Test
+  public void testRenderMessage() {
+
+  }
+
 
   @Test
   public void testToString() {
