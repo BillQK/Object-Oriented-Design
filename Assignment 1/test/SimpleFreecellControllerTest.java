@@ -209,7 +209,7 @@ public class SimpleFreecellControllerTest {
 
   @Test()
   public void testPlayGameUserInputInvalidStringSourcePile() {
-    input = new StringReader("1C21 1 asdf 3 J9 L3 M3 V C F O");
+    input = new StringReader("1C21 1 asdf 3 J9 L3 M3 V C F 1.0");
     controller = new SimpleFreecellController<>(model, input, outPutLog);
     try {
       controller.playGame(model.getDeck(), 52, 1, false);
@@ -242,7 +242,7 @@ public class SimpleFreecellControllerTest {
 
   @Test()
   public void testPlayGameUserInputInvalidCardIndex() {
-    input = new StringReader("C1 adsflkj adjk nv m12 kfj4 flkjalsd");
+    input = new StringReader("C1 adsflkj adjk 1.0 m12 kfj4 flkjalsd");
     controller = new SimpleFreecellController<>(model, input, outPutLog);
     try {
       controller.playGame(model.getDeck(), 4, 1, false);
@@ -265,7 +265,7 @@ public class SimpleFreecellControllerTest {
   @Test
   public void testPlayGameWithRandomInputWithCorrectMovesInBetween() {
     // C1, 1, and O3
-    Readable input = new StringReader("G431asdf jas 23 C1 fdsawe Fasdf D1 1 Or2 O3");
+    Readable input = new StringReader("G431asdf 1.0 23 C1 fdsawe Fasdf D1 1 Or2 O3");
     controller = new SimpleFreecellController<>(model, input, outPutLog);
     try {
       controller.playGame(model.getDeck(), 52, 4, false);
