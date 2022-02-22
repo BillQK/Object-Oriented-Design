@@ -94,11 +94,17 @@ public class FreecellModelTest {
   // deck initialize
   List<Card> loc = new ArrayList<>();
 
-  Card[] clubCards = new Card[]{aceClub, twoClub, threeClub, fourClub, fiveClub, sixClub, sevenClub, eightClub, nineClub, tenClub, jackClub, queenClub, kingClub};
-  Card[] diamondCards = new Card[]{aceDiamond, twoDiamond, threeDiamond, fourDiamond, fiveDiamond, sixDiamond, sevenDiamond, eightDiamond, nineDiamond, tenDiamond, jackDiamond, queenDiamond, kingDiamond};
-  Card[] spadeCards = new Card[]{aceSpade, twoSpade, threeSpade, fourSpade, fiveSpade, sixSpade, sevenSpade, eightSpade, nineSpade, tenSpade, jackSpade, queenSpade, kingSpade};
-  Card[] heartCard = new Card[]{aceHeart, twoHeart, threeHeart, fourHeart, fiveHeart, sixHeart, sevenHeart, eightHeart, nineHeart, tenHeart, jackHeart, queenHeart, kingHeart};
-
+  Card[] clubCards = new Card[]{aceClub, twoClub, threeClub, fourClub, fiveClub, sixClub, sevenClub,
+                                eightClub, nineClub, tenClub, jackClub, queenClub, kingClub};
+  Card[] diamondCards = new Card[]{aceDiamond, twoDiamond, threeDiamond, fourDiamond, fiveDiamond,
+                                   sixDiamond, sevenDiamond, eightDiamond, nineDiamond, tenDiamond,
+                                   jackDiamond, queenDiamond, kingDiamond};
+  Card[] spadeCards = new Card[]{aceSpade, twoSpade, threeSpade, fourSpade, fiveSpade, sixSpade,
+                                 sevenSpade, eightSpade, nineSpade, tenSpade, jackSpade, queenSpade,
+                                 kingSpade};
+  Card[] heartCard = new Card[]{aceHeart, twoHeart, threeHeart, fourHeart, fiveHeart, sixHeart,
+                                sevenHeart, eightHeart, nineHeart, tenHeart, jackHeart, queenHeart,
+                                kingHeart};
 
   // Invalid deck
   List<Card> duplicateDeck = new ArrayList<>();
@@ -163,21 +169,34 @@ public class FreecellModelTest {
     g3.startGame(loc, 4, 4, false);
 
     // Test shuffle
-    assertNotEquals(g1.getCascadeCardAt(0, 1), g2.getCascadeCardAt(0, 1));
-    assertNotEquals(g1.getCascadeCardAt(1, 2), g2.getCascadeCardAt(1, 2));
-    assertNotEquals(g2.getCascadeCardAt(1, 6), g1.getCascadeCardAt(1, 6));
-    assertNotEquals(g2.getCascadeCardAt(3, 7), g1.getCascadeCardAt(3, 7));
-    assertNotEquals(g2.getCascadeCardAt(0, 8), g1.getCascadeCardAt(0, 8));
-    assertNotEquals(g2.getCascadeCardAt(1, 9), g1.getCascadeCardAt(1, 9));
-    assertNotEquals(g2.getCascadeCardAt(2, 10), g1.getCascadeCardAt(2, 10));
-    assertNotEquals(g2.getCascadeCardAt(3, 11), g1.getCascadeCardAt(3, 11));
+    assertNotEquals(g1.getCascadeCardAt(0, 1),
+            g2.getCascadeCardAt(0, 1));
+    assertNotEquals(g1.getCascadeCardAt(1, 2),
+            g2.getCascadeCardAt(1, 2));
+    assertNotEquals(g2.getCascadeCardAt(1, 6),
+            g1.getCascadeCardAt(1, 6));
+    assertNotEquals(g2.getCascadeCardAt(3, 7),
+            g1.getCascadeCardAt(3, 7));
+    assertNotEquals(g2.getCascadeCardAt(0, 8),
+            g1.getCascadeCardAt(0, 8));
+    assertNotEquals(g2.getCascadeCardAt(1, 9),
+            g1.getCascadeCardAt(1, 9));
+    assertNotEquals(g2.getCascadeCardAt(2, 10),
+            g1.getCascadeCardAt(2, 10));
+    assertNotEquals(g2.getCascadeCardAt(3, 11),
+            g1.getCascadeCardAt(3, 11));
 
     // Test no shuffle
-    assertEquals(g3.getCascadeCardAt(0, 0), g3.getCascadeCardAt(0, 0));
-    assertEquals(g3.getCascadeCardAt(1, 1), g3.getCascadeCardAt(1, 1));
-    assertEquals(g3.getCascadeCardAt(2, 2), g3.getCascadeCardAt(2, 2));
-    assertEquals(g3.getCascadeCardAt(3, 3), g3.getCascadeCardAt(3, 3));
-    assertEquals(g3.getCascadeCardAt(1, 4), g3.getCascadeCardAt(1, 4));
+    assertEquals(g3.getCascadeCardAt(0, 0),
+            g3.getCascadeCardAt(0, 0));
+    assertEquals(g3.getCascadeCardAt(1, 1),
+            g3.getCascadeCardAt(1, 1));
+    assertEquals(g3.getCascadeCardAt(2, 2),
+            g3.getCascadeCardAt(2, 2));
+    assertEquals(g3.getCascadeCardAt(3, 3),
+            g3.getCascadeCardAt(3, 3));
+    assertEquals(g3.getCascadeCardAt(1, 4),
+            g3.getCascadeCardAt(1, 4));
   }
 
   @Test
@@ -488,7 +507,8 @@ public class FreecellModelTest {
 
   @Test
   public void testGameNotStartedGetNumCascadePiles() {
-    assertEquals(g1.getNumCascadePiles(), -1);
+    assertEquals(g1.getNumCascadePiles(),
+            -1);
   }
 
   @Test
@@ -748,5 +768,11 @@ public class FreecellModelTest {
     assertEquals(g1.getOpenCardAt(2), aceSpade);
     assertEquals(g1.getOpenCardAt(3), aceHeart);
 
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void testMoveWithoutStartGame() {
+    g1.move(PileType.CASCADE, 0,
+            0, PileType.OPEN, 0);
   }
 }

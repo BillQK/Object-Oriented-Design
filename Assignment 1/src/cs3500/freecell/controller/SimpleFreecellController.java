@@ -10,12 +10,23 @@ import cs3500.freecell.model.PileType;
 import cs3500.freecell.view.FreecellTextView;
 import cs3500.freecell.view.FreecellView;
 
+/**
+ * A representation of a simple freecell controller.
+ *
+ * @param <Card> A card type
+ */
 public class SimpleFreecellController<Card> implements FreecellController<Card> {
   private final FreecellView view;
   private final FreecellModel<Card> model;
   private final Scanner scan;
 
-
+  /**
+   * A constructor for SimpleFreecellController.
+   *
+   * @param model a FreecellModel
+   * @param rd    a Readable
+   * @param ap    a Appendable
+   */
   public SimpleFreecellController(FreecellModel<Card> model, Readable rd, Appendable ap) {
     if (model == null) {
       throw new IllegalArgumentException("Invalid model");
@@ -41,7 +52,8 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
    * @param numCascades the number of cascade piles
    * @param numOpens    the number of open piles
    * @param shuffle     shuffle the deck if true, false otherwise
-   * @throws IllegalStateException    if writing to the Appendable object used by it fails or reading from the provided Readable fails
+   * @throws IllegalStateException    if writing to the Appendable object used by it fails or
+   *                                  reading from the provided Readable fails
    * @throws IllegalArgumentException if the deck provided to it are null
    */
   @Override
@@ -66,8 +78,9 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
 
       while (!model.isGameOver()) {
 
-        String a, b, c;
-
+        String a;
+        String b;
+        String c;
 
         while (commandSequence.size() == 0) {
           try {
@@ -80,9 +93,10 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
             if (a.equalsIgnoreCase("q")) {
               view.renderMessage("Game quit prematurely." + "\n");
               return;
-            } else if (isValidInput(a)) {
+            }
+            if (isValidInput(a)) {
               commandSequence.add(a);
-            } else continue;
+            }
           } catch (IllegalArgumentException e) {
             view.renderMessage("Invalid SourcePile input. Please Enter Again." + "\n");
           }
@@ -99,9 +113,10 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
             if (b.equalsIgnoreCase("q")) {
               view.renderMessage("Game quit prematurely." + "\n");
               return;
-            } else if (isInteger(b)) {
+            }
+            if (isInteger(b)) {
               commandSequence.add(b);
-            } else continue;
+            }
           } catch (IllegalArgumentException e) {
             view.renderMessage("Invalid Card Index. Please Enter Again." + "\n");
           }
@@ -117,9 +132,10 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
             if (c.equalsIgnoreCase("q")) {
               view.renderMessage("Game quit prematurely." + "\n");
               return;
-            } else if (isValidInput(c)) {
+            }
+            if (isValidInput(c)) {
               commandSequence.add(c);
-            } else continue;
+            }
           } catch (IllegalArgumentException e) {
             view.renderMessage("Invalid Destination Pile. Please Enter Again." + "\n");
           }
@@ -159,7 +175,14 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
     }
   }
 
-  private boolean isInteger(String b) throws IOException {
+  /**
+   * A method that check to see if the String is an integer.
+   *
+   * @param b a String
+   * @return a boolean
+   * @throws IllegalArgumentException if the String is not an integer
+   */
+  private boolean isInteger(String b) {
     try {
       Integer.parseInt(b);
     } catch (NumberFormatException | NullPointerException e) {
@@ -168,11 +191,23 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
     return true;
   }
 
+  /**
+   * A method that return an int given the string.
+   *
+   * @param s a String
+   * @return a integer
+   */
   private int toPileNum(String s) {
     return Integer.parseInt(s.substring(1)) - 1;
   }
 
-  private PileType toPile(String s) throws IOException {
+  /**
+   * A method that return a PileType given the string.
+   *
+   * @param s a String
+   * @return a PileType
+   */
+  private PileType toPile(String s) {
     switch (s.charAt(0)) {
       case 'O':
         return PileType.OPEN;
@@ -185,7 +220,13 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
     }
   }
 
-  private boolean isValidInput(String a) throws IOException {
+  /**
+   * A method that check to see if the string is a valid input.
+   *
+   * @param a a String
+   * @return a boolean
+   */
+  private boolean isValidInput(String a) {
     if (a.length() >= 2 && goodInput(a.charAt(0)) && isInteger(a.substring(1))) {
       return true;
     } else {
@@ -193,7 +234,12 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
     }
   }
 
-
+  /**
+   * A method that to see if the char is a C,F,O.
+   *
+   * @param charAt a Char
+   * @return a boolean
+   */
   private boolean goodInput(char charAt) {
     switch (charAt) {
       case 'C':

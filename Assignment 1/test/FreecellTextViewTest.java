@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class FreecellTextViewTest {
   FreecellTextView textView;
-  FreecellModel model;
+  FreecellModel<Card> model;
 
   // Card initialized
   Card aceHeart = new Card(Value.ACE, Suit.HEART);
@@ -119,17 +119,6 @@ public class FreecellTextViewTest {
     textView = new FreecellTextView(model, new StringBuilder());
     assertEquals(textView.toString(), "");
   }
-
-  @Test
-  public void testRenderBoard() {
-
-  }
-
-  @Test
-  public void testRenderMessage() {
-
-  }
-
 
   @Test
   public void testToString() {
