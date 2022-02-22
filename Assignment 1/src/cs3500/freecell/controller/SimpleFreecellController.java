@@ -11,9 +11,11 @@ import cs3500.freecell.view.FreecellTextView;
 import cs3500.freecell.view.FreecellView;
 
 /**
- * A representation of a simple freecell controller.
+ * A representation of a simple freecell controller which implements FreecellController interface,
+ * this class receive the user input pass the input to the model and pass the model to the view
+ * class.
  *
- * @param <Card> A card type
+ * @param <Card> A card class
  */
 public class SimpleFreecellController<Card> implements FreecellController<Card> {
   private final FreecellView view;
@@ -81,7 +83,7 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
         String a;
         String b;
         String c;
-
+        // Source Pile input checking
         while (commandSequence.size() == 0) {
           try {
             if (scan.hasNext()) {
@@ -101,7 +103,7 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
             view.renderMessage("Invalid SourcePile input. Please Enter Again." + "\n");
           }
         }
-
+        // Card Index input checking
         while (commandSequence.size() == 1) {
           try {
             if (scan.hasNext()) {
@@ -121,7 +123,7 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
             view.renderMessage("Invalid Card Index. Please Enter Again." + "\n");
           }
         }
-
+        // Destination Pile input checking
         while (commandSequence.size() == 2) {
           try {
             if (scan.hasNext()) {
@@ -147,6 +149,7 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
         PileType destPile;
         int destPileNum;
 
+        // move method
         try {
           if (commandSequence.size() == 3) {
             sourcePile = toPile(commandSequence.get(0));

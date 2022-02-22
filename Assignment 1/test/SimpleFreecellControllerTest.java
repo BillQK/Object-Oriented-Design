@@ -124,6 +124,7 @@ public class SimpleFreecellControllerTest {
     }
   }
 
+
   @Test
   public void testPlayGameWithANullDeck() {
     input = new StringReader("");
@@ -135,7 +136,7 @@ public class SimpleFreecellControllerTest {
     }
   }
 
-  @Test()
+  @Test
   public void testPlayGameStartGameInvalidCascades() {
     input = new StringReader("");
     controller = new SimpleFreecellController<>(model, input, outPutLog);
@@ -143,7 +144,23 @@ public class SimpleFreecellControllerTest {
     assertEquals(outPutLog.toString(), "Could not start game.");
   }
 
-  @Test()
+  @Test
+  public void testPlayGameStartGameInvalidCascadesNegativeNumber() {
+    input = new StringReader("");
+    controller = new SimpleFreecellController<>(model, input, outPutLog);
+    controller.playGame(model.getDeck(), -1, 3, false);
+    assertEquals(outPutLog.toString(), "Could not start game.");
+  }
+
+  @Test
+  public void testPlayGameStartGameInvalidOpenPilesNegativeNumber() {
+    input = new StringReader("");
+    controller = new SimpleFreecellController<>(model, input, outPutLog);
+    controller.playGame(model.getDeck(), 4, -1, false);
+    assertEquals(outPutLog.toString(), "Could not start game.");
+  }
+
+  @Test
   public void testPlayGameStartGameInvalidOpenPiles() {
     input = new StringReader("");
     controller = new SimpleFreecellController<>(model, input, outPutLog);
@@ -306,7 +323,7 @@ public class SimpleFreecellControllerTest {
 
   }
 
-  @Test()
+  @Test
   public void testPlayGameUserInputInvalidDestinationPile() {
     input = new StringReader("C1 1 jfalkd fjlkasdj O1a Oa1 A3 aO1");
     controller = new SimpleFreecellController<>(model, input, outPutLog);
@@ -324,6 +341,213 @@ public class SimpleFreecellControllerTest {
               "Invalid Destination Pile. Please Enter Again.\n"
               + "Invalid Destination Pile. Please Enter Again.\n" +
               "Invalid Destination Pile. Please Enter Again.\n");
+    }
+  }
+
+  @Test
+  public void testPlayGameUserInputSpecialCharactersSourcePile1() {
+    input = new StringReader(" ! @ # $ % ^ & * ( )");
+    controller = new SimpleFreecellController<>(model, input, outPutLog);
+    try {
+      controller.playGame(model.getDeck(), 4, 1, false);
+    } catch (IllegalStateException e) {
+      assertEquals(outPutLog.toString(), "F1:\n" +
+              "F2:\n" +
+              "F3:\n" +
+              "F4:\n" +
+              "O1:\n" +
+              "C1: A♣, 5♣, 9♣, K♣, 4♦, 8♦, Q♦, 3♠, 7♠, J♠, 2♥, 6♥, 10♥\n" +
+              "C2: 2♣, 6♣, 10♣, A♦, 5♦, 9♦, K♦, 4♠, 8♠, Q♠, 3♥, 7♥, J♥\n" +
+              "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n" +
+              "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n" +
+              "Invalid SourcePile input. Please Enter Again.\n" +
+              "Invalid SourcePile input. Please Enter Again.\n" +
+              "Invalid SourcePile input. Please Enter Again.\n" +
+              "Invalid SourcePile input. Please Enter Again.\n" +
+              "Invalid SourcePile input. Please Enter Again.\n" +
+              "Invalid SourcePile input. Please Enter Again.\n" +
+              "Invalid SourcePile input. Please Enter Again.\n" +
+              "Invalid SourcePile input. Please Enter Again.\n" +
+              "Invalid SourcePile input. Please Enter Again.\n" +
+              "Invalid SourcePile input. Please Enter Again.\n");
+    }
+  }
+
+  @Test
+  public void testPlayGameUserInputSpecialCharactersSourcePile2() {
+    input = new StringReader(" _ - + = { } [ ] |  : ; < > , . / ? ` ~");
+    controller = new SimpleFreecellController<>(model, input, outPutLog);
+    try {
+      controller.playGame(model.getDeck(), 4, 1, false);
+    } catch (IllegalStateException e) {
+      assertEquals(outPutLog.toString(),
+              "F1:\n" +
+                      "F2:\n" +
+                      "F3:\n" +
+                      "F4:\n" +
+                      "O1:\n" +
+                      "C1: A♣, 5♣, 9♣, K♣, 4♦, 8♦, Q♦, 3♠, 7♠, J♠, 2♥, 6♥, 10♥\n" +
+                      "C2: 2♣, 6♣, 10♣, A♦, 5♦, 9♦, K♦, 4♠, 8♠, Q♠, 3♥, 7♥, J♥\n" +
+                      "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n" +
+                      "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n");
+    }
+  }
+
+
+  @Test
+  public void testPlayGameUserInputSpecialCharactersCardIndex1() {
+    input = new StringReader("C1 ! @ # $ % ^ & * ( )");
+    controller = new SimpleFreecellController<>(model, input, outPutLog);
+    try {
+      controller.playGame(model.getDeck(), 4, 1, false);
+    } catch (IllegalStateException e) {
+      assertEquals(outPutLog.toString(),
+              "F1:\n" +
+                      "F2:\n" +
+                      "F3:\n" +
+                      "F4:\n" +
+                      "O1:\n" +
+                      "C1: A♣, 5♣, 9♣, K♣, 4♦, 8♦, Q♦, 3♠, 7♠, J♠, 2♥, 6♥, 10♥\n" +
+                      "C2: 2♣, 6♣, 10♣, A♦, 5♦, 9♦, K♦, 4♠, 8♠, Q♠, 3♥, 7♥, J♥\n" +
+                      "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n" +
+                      "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n");
+    }
+  }
+
+  @Test
+  public void testPlayGameUserInputSpecialCharactersCardIndex2() {
+    input = new StringReader("C1 _ - + = { } [ ] |  : ; < > , . / ? ` ~");
+    controller = new SimpleFreecellController<>(model, input, outPutLog);
+    try {
+      controller.playGame(model.getDeck(), 4, 1, false);
+    } catch (IllegalStateException e) {
+      assertEquals(outPutLog.toString(),
+              "F1:\n" +
+                      "F2:\n" +
+                      "F3:\n" +
+                      "F4:\n" +
+                      "O1:\n" +
+                      "C1: A♣, 5♣, 9♣, K♣, 4♦, 8♦, Q♦, 3♠, 7♠, J♠, 2♥, 6♥, 10♥\n" +
+                      "C2: 2♣, 6♣, 10♣, A♦, 5♦, 9♦, K♦, 4♠, 8♠, Q♠, 3♥, 7♥, J♥\n" +
+                      "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n" +
+                      "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n" +
+                      "Invalid Card Index. Please Enter Again.\n");
+    }
+  }
+
+  @Test
+  public void testPlayGameUserInputSpecialCharactersDestinationPile1() {
+    input = new StringReader("C1 1 ! @ # $ % ^ & * ( )");
+    controller = new SimpleFreecellController<>(model, input, outPutLog);
+    try {
+      controller.playGame(model.getDeck(), 4, 1, false);
+    } catch (IllegalStateException e) {
+      assertEquals(outPutLog.toString(),
+              "F1:\n" +
+                      "F2:\n" +
+                      "F3:\n" +
+                      "F4:\n" +
+                      "O1:\n" +
+                      "C1: A♣, 5♣, 9♣, K♣, 4♦, 8♦, Q♦, 3♠, 7♠, J♠, 2♥, 6♥, 10♥\n" +
+                      "C2: 2♣, 6♣, 10♣, A♦, 5♦, 9♦, K♦, 4♠, 8♠, Q♠, 3♥, 7♥, J♥\n" +
+                      "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n" +
+                      "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n");
+    }
+  }
+
+  @Test
+  public void testPlayGameUserInputSpecialCharactersDestinationPile2() {
+    input = new StringReader("C1 1 _ - + = { } [ ] |  : ; < > , . / ? ` ~");
+    controller = new SimpleFreecellController<>(model, input, outPutLog);
+    try {
+      controller.playGame(model.getDeck(), 4, 1, false);
+    } catch (IllegalStateException e) {
+      assertEquals(outPutLog.toString(),
+              "F1:\n" +
+                      "F2:\n" +
+                      "F3:\n" +
+                      "F4:\n" +
+                      "O1:\n" +
+                      "C1: A♣, 5♣, 9♣, K♣, 4♦, 8♦, Q♦, 3♠, 7♠, J♠, 2♥, 6♥, 10♥\n" +
+                      "C2: 2♣, 6♣, 10♣, A♦, 5♦, 9♦, K♦, 4♠, 8♠, Q♠, 3♥, 7♥, J♥\n" +
+                      "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n" +
+                      "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n" +
+                      "Invalid Destination Pile. Please Enter Again.\n");
     }
   }
 
@@ -383,8 +607,6 @@ public class SimpleFreecellControllerTest {
             + "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n"
             + "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n"
             + "Game quit prematurely.\n");
-
-
   }
 
   @Test
@@ -413,6 +635,80 @@ public class SimpleFreecellControllerTest {
             + "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n"
             + "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n"
             + "Game quit prematurely.\n");
+  }
+
+  @Test
+  public void testPlayGameQuitWhenLookingForDestinationPileWithCapitalQ() {
+    input = new StringReader("C1 1 Q");
+    FreecellController<Card> controller = new SimpleFreecellController<>(model, input, outPutLog);
+    controller.playGame(model.getDeck(), 4, 4, false);
+    assertEquals(outPutLog.toString(), "F1:\n" + "F2:\n" + "F3:\n" + "F4:\n" + "O1:\n" +
+            "O2:\n" + "O3:\n" + "O4:\n"
+            + "C1: A♣, 5♣, 9♣, K♣, 4♦, 8♦, Q♦, 3♠, 7♠, J♠, 2♥, 6♥, 10♥\n"
+            + "C2: 2♣, 6♣, 10♣, A♦, 5♦, 9♦, K♦, 4♠, 8♠, Q♠, 3♥, 7♥, J♥\n"
+            + "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n"
+            + "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n"
+            + "Game quit prematurely.\n");
+  }
+
+  @Test
+  public void testPlayGameQuitWhenLookingForCardIndexWithCapitalQ() {
+    input = new StringReader("C1 Q");
+    FreecellController<Card> controller = new SimpleFreecellController<>(model, input, outPutLog);
+    controller.playGame(model.getDeck(), 4, 4, false);
+    assertEquals(outPutLog.toString(), "F1:\n" + "F2:\n" + "F3:\n" + "F4:\n" + "O1:\n" +
+            "O2:\n" + "O3:\n" + "O4:\n"
+            + "C1: A♣, 5♣, 9♣, K♣, 4♦, 8♦, Q♦, 3♠, 7♠, J♠, 2♥, 6♥, 10♥\n"
+            + "C2: 2♣, 6♣, 10♣, A♦, 5♦, 9♦, K♦, 4♠, 8♠, Q♠, 3♥, 7♥, J♥\n"
+            + "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n"
+            + "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n"
+            + "Game quit prematurely.\n");
+  }
+
+  @Test
+  public void testPlayGameQuitWhenLookingForSourcePileWithCapitalQ() {
+    input = new StringReader("C1 1 Q");
+    FreecellController<Card> controller = new SimpleFreecellController<>(model, input, outPutLog);
+    controller.playGame(model.getDeck(), 4, 4, false);
+    assertEquals(outPutLog.toString(), "F1:\n" + "F2:\n" + "F3:\n" + "F4:\n" + "O1:\n" +
+            "O2:\n" + "O3:\n" + "O4:\n"
+            + "C1: A♣, 5♣, 9♣, K♣, 4♦, 8♦, Q♦, 3♠, 7♠, J♠, 2♥, 6♥, 10♥\n"
+            + "C2: 2♣, 6♣, 10♣, A♦, 5♦, 9♦, K♦, 4♠, 8♠, Q♠, 3♥, 7♥, J♥\n"
+            + "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n"
+            + "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n"
+            + "Game quit prematurely.\n");
+  }
+
+  @Test
+  public void testPlayGameDoesNotQuit() {
+    input = new StringReader("Q12 Qndf QAD Q1.0 q12 qndf qad q1.0");
+    FreecellController<Card> controller = new SimpleFreecellController<>(model, input, outPutLog);
+    try {
+      controller.playGame(model.getDeck(), 4, 4, false);
+    } catch (IllegalStateException e) {
+      assertEquals(outPutLog.toString(),
+              "F1:\n" +
+                      "F2:\n" +
+                      "F3:\n" +
+                      "F4:\n" +
+                      "O1:\n" +
+                      "O2:\n" +
+                      "O3:\n" +
+                      "O4:\n" +
+                      "C1: A♣, 5♣, 9♣, K♣, 4♦, 8♦, Q♦, 3♠, 7♠, J♠, 2♥, 6♥, 10♥\n" +
+                      "C2: 2♣, 6♣, 10♣, A♦, 5♦, 9♦, K♦, 4♠, 8♠, Q♠, 3♥, 7♥, J♥\n" +
+                      "C3: 3♣, 7♣, J♣, 2♦, 6♦, 10♦, A♠, 5♠, 9♠, K♠, 4♥, 8♥, Q♥\n" +
+                      "C4: 4♣, 8♣, Q♣, 3♦, 7♦, J♦, 2♠, 6♠, 10♠, A♥, 5♥, 9♥, K♥\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n" +
+                      "Invalid SourcePile input. Please Enter Again.\n");
+
+    }
   }
 
   @Test

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A Representation of a simple FreeCell Model.
+ * A representation of a simple FreeCell Model which implements the FreecellModel interface.
  */
 public class SimpleFreecellModel implements FreecellModel<Card> {
   private final List<Pile> listOfCascadePiles;

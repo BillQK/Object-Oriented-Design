@@ -12,6 +12,6 @@ public class Main {
   public static void main(String[] args) {
     FreecellModel<Card> model = new SimpleFreecellModel();
     FreecellController<Card> controller = new SimpleFreecellController<>(model,new InputStreamReader(System.in), System.out);
-    controller.playGame(model.getDeck(), 5,4, true);
+    controller.playGame(model.getDeck(), 5,4, false);
   }
 }

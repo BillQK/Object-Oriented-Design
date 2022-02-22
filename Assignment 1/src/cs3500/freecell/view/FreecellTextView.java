@@ -25,6 +25,11 @@ public class FreecellTextView implements FreecellView {
     this.model = model;
   }
 
+  /**
+   * A second constructor of FreecellTextview.
+   * @param model a given FreecellModel State
+   * @param output an Appendable
+   */
   public FreecellTextView(FreecellModelState<?> model, Appendable output) {
     this(model);
     this.output = output;
