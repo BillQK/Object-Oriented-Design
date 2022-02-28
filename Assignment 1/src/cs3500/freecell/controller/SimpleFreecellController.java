@@ -74,12 +74,9 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
       }
     }
     try {
-
       view.renderBoard();
       ArrayList<String> commandSequence = new ArrayList<>();
-
       while (!model.isGameOver()) {
-
         String a;
         String b;
         String c;
@@ -142,13 +139,11 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
             view.renderMessage("Invalid Destination Pile. Please Enter Again." + "\n");
           }
         }
-
         PileType sourcePile;
         int sourcePileNum;
         int cardIndex;
         PileType destPile;
         int destPileNum;
-
         // move method
         try {
           if (commandSequence.size() == 3) {
@@ -165,7 +160,6 @@ public class SimpleFreecellController<Card> implements FreecellController<Card> 
           commandSequence.clear();
           view.renderMessage("Invalid move. Try Again" + "\n");
         }
-
       }
       view.renderMessage("Game over." + "\n");
     } catch (IOException e) {

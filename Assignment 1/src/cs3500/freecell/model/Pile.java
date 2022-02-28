@@ -51,6 +51,16 @@ public abstract class Pile {
   }
 
   /**
+   * Gets a sublist of the pile from the cardIndex.
+   *
+   * @param cardIndex the index to begin with the sublist
+   * @return a list of cards
+   */
+  public List<Card> getSubList(int cardIndex) {
+    return new ArrayList<>(this.loc.subList(cardIndex, loc.size()));
+  }
+
+  /**
    * A method that return the Top card of the pile.
    *
    * @return a Card
@@ -97,4 +107,18 @@ public abstract class Pile {
     return loc.isEmpty();
   }
 
+
+  /**
+   * A method that removes a collection of cards from the list.
+   *
+   * @param cardList a list of cards
+   */
+  public abstract void removeAll(List<Card> cardList);
+
+  /**
+   * a method that add a collection of cards to the card list.
+   *
+   * @param cardList a list of cards
+   */
+  public abstract void addAll(List<Card> cardList);
 }

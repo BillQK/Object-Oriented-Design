@@ -145,7 +145,7 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
    * @return a List of Pile
    * @throws IllegalArgumentException if the given PileType is invalid
    */
-  private List<Pile> getPile(PileType pile) {
+  protected List<Pile> getPile(PileType pile) {
     if (pile == PileType.CASCADE) {
       return this.listOfCascadePiles;
     } else if (pile == PileType.FOUNDATION) {
@@ -170,7 +170,7 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
    * @throws IllegalArgumentException if pileNumber and destNumber are less than 0
    *                                  or greater than the pile size
    */
-  private void isValidMovePileType(PileType source, int pileNumber,
+  protected void isValidMovePileType(PileType source, int pileNumber,
                                    PileType destination, int destPileNumber) {
     // get source pile
     List<Pile> sourcePileType = getPile(source);

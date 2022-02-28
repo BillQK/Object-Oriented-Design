@@ -1,5 +1,7 @@
 package cs3500.freecell.model;
 
+import java.util.List;
+
 /**
  * A representation of an Open Pile.
  */
@@ -36,6 +38,21 @@ public class OpenPile extends Pile {
   @Override
   public boolean validPile(PileType sourcePile) {
     return sourcePile == PileType.CASCADE || sourcePile == PileType.OPEN;
+  }
+
+  @Override
+  public void removeAll(List<Card> cardList) {
+    throw new IllegalArgumentException("Action cannot perform on Open Pile");
+  }
+
+  /**
+   * a method that add a collection of cards to the card list.
+   *
+   * @param cardList a list of cards
+   */
+  @Override
+  public void addAll(List<Card> cardList) {
+    throw new IllegalArgumentException("Action cannot perform on Open Pile");
   }
 
 

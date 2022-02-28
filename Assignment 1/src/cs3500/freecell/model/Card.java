@@ -40,7 +40,7 @@ public class Card {
    *
    * @param o a Card object, if not return false.
    * @return a boolean, true if the object is same in value and suit,
-   *         false if the object is not equal
+   * false if the object is not equal
    */
   @Override
   public boolean equals(Object o) {
@@ -83,7 +83,6 @@ public class Card {
       throw new IllegalArgumentException("Card cannot be added to the Foundation Pile");
     }
 
-
   }
 
   /**
@@ -99,6 +98,20 @@ public class Card {
     } else {
       throw new IllegalArgumentException("Card cannot be added to the Cascade Pile");
     }
+  }
+
+  /**
+   * a method that determines if the given is a valid card.
+   *
+   * @param card a Card object
+   * @return a boolean
+   * @throws IllegalArgumentException if it can't add card to the cascade pile
+   */
+  public boolean isValidBuild(Card card) {
+    if (card == null) {
+      return true;
+    }
+    return this.value.isOneGreater(card.value) && this.suit.isDifferentColor(card.suit);
   }
 
   /**
