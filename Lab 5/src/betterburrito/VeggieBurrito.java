@@ -13,7 +13,7 @@ public class VeggieBurrito extends CustomBurrito<VeggieBurrito.VeggieBurritoBuil
    * A constructor of the veggie burrito.
    * @param builder a BurritoBuilder type VeggieBurritoBuilder
    */
-  public VeggieBurrito(BurritoBuilder<VeggieBurritoBuilder> builder) {
+  private VeggieBurrito(BurritoBuilder<VeggieBurritoBuilder> builder) {
     super(builder);
   }
 

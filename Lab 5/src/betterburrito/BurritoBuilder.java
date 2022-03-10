@@ -23,23 +23,18 @@ public abstract class BurritoBuilder<T extends BurritoBuilder<T>> {
     this.toppings = new HashMap<>();
   }
 
-  public BurritoBuilder<T> size(Size size) {
+  public T size(Size size) {
     this.size = size;
     return returnBuilder();
   }
 
-  public BurritoBuilder<T> addProtein(Protein protein, PortionSize portionSize) {
+  public T addProtein(Protein protein, PortionSize portionSize) {
     this.proteins.put(protein, portionSize);
     return returnBuilder();
   }
 
-  public BurritoBuilder<T> addTopping(Topping topping, PortionSize portionSize) {
+  public T addTopping(Topping topping, PortionSize portionSize) {
     this.toppings.put(topping, portionSize);
-    return returnBuilder();
-  }
-
-  public BurritoBuilder<T> noCheese() {
-    this.toppings.remove(Topping.Cheese);
     return returnBuilder();
   }
 

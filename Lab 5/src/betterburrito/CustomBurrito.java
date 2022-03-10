@@ -21,7 +21,7 @@ public class CustomBurrito<T extends BurritoBuilder<T>> implements ObservableBur
    *
    * @param builder a CustomBurritoBuilder
    */
-  public CustomBurrito(BurritoBuilder<T> builder) {
+  protected CustomBurrito(BurritoBuilder<T> builder) {
     this.size = builder.size;
     this.proteins = builder.proteins;
     this.toppings = builder.toppings;
@@ -76,3 +76,37 @@ public class CustomBurrito<T extends BurritoBuilder<T>> implements ObservableBur
   }
 
 }
+
+
+/**
+ * Coffee.CoffeeBuilder().dairy("milk").sugar().build()
+ *
+ *
+ * coffee {
+ *
+ *  private Coffee(CoffeeBuilder s) {
+ *    this.dairy = s.dairy;
+ *    this.sugar = s.sugar;
+ *  }
+ *
+ *  public static CoffeeBuilder() {
+ *    String dairyType
+ *    boolean sugar;
+ *
+ *    CoffeeBuilder(String s, boolean sugar) {
+ *      this.dairyType = s;
+ *      this.sugar = sugar;
+ *    }
+ *
+ *    CoffeeBuilder setDairy(Str s) {
+ *      this.dairyType = s;
+ *      return CoffeeBuilder
+ *    }
+ *
+ *    Coffee build() {
+ *      return new Coffee(this);
+ *    }
+ *  }
+ *
+ * }
+ */
