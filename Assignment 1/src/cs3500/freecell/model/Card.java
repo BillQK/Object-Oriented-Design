@@ -40,7 +40,7 @@ public class Card {
    *
    * @param o a Card object, if not return false.
    * @return a boolean, true if the object is same in value and suit,
-   * false if the object is not equal
+   *         false if the object is not equal
    */
   @Override
   public boolean equals(Object o) {

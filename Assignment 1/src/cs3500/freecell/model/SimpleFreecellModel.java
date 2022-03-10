@@ -14,7 +14,7 @@ public class SimpleFreecellModel implements FreecellModel<Card> {
   private final List<Pile> listOfOpenPiles;
   private final List<Pile> listOfFoundationPiles;
   private List<Card> deck;
-  private boolean isGameStart;
+  protected boolean isGameStart;
 
 
   /**

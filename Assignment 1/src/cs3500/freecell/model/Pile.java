@@ -108,17 +108,4 @@ public abstract class Pile {
   }
 
 
-  /**
-   * A method that removes a collection of cards from the list.
-   *
-   * @param cardList a list of cards
-   */
-  public abstract void removeAll(List<Card> cardList);
-
-  /**
-   * a method that add a collection of cards to the card list.
-   *
-   * @param cardList a list of cards
-   */
-  public abstract void addAll(List<Card> cardList);
 }

@@ -33,7 +33,11 @@ public class MultiMoveFreecellModel extends SimpleFreecellModel {
    *                                  starts
    */
   @Override
-  public void move(PileType source, int pileNumber, int cardIndex, PileType destination, int destPileNumber) {
+  public void move(PileType source, int pileNumber, int cardIndex,
+                   PileType destination, int destPileNumber) {
+    if (!super.isGameStart) {
+      throw new IllegalStateException("Game has not started");
+    }
 
     isValidMovePileType(source, pileNumber, destination, destPileNumber);
     // get source pile
@@ -46,29 +50,32 @@ public class MultiMoveFreecellModel extends SimpleFreecellModel {
     // get dest pile number
     Pile destPile = destPileType.get(destPileNumber);
 
+    if (sourcePile.isEmpty()) {
+      throw new IllegalArgumentException("Invalid source pile. No Cards Available");
+    }
+
+
     if (cardIndex > sourcePile.numberOfCards() - 1 || cardIndex < 0) {
       throw new IllegalArgumentException("Invalid Card Index");
     }
     int emptyOpenPile = checkEmptyPile(PileType.OPEN);
     int emptyCascadePiles = checkEmptyPile(PileType.CASCADE);
 
-    if (destPile.isEmpty() && destination == PileType.OPEN) {
-      emptyOpenPile -= 1;
-    }
-    if (destPile.isEmpty() && destination == PileType.CASCADE) {
-      emptyCascadePiles -= 1;
+    List<Card> cardList = sourcePile.getSubList(cardIndex);
+    if (!destPile.isEmpty() && sourcePile.numberOfCards() == cardList.size()) {
+      if (destPile.isEmpty() && destination == PileType.OPEN) {
+        emptyOpenPile -= 1;
+      }
+      if (destPile.isEmpty() && destination == PileType.CASCADE) {
+        emptyCascadePiles -= 1;
+      }
     }
 
-    if (sourcePile.isEmpty()) {
-      throw new IllegalArgumentException("Invalid source pile. No Cards Available");
-    }
+
     if (cardIndex == sourcePile.numberOfCards() - 1) {
       super.move(source, pileNumber, cardIndex, destination, destPileNumber);
     } else {
-      List<Card> cardList = sourcePile.getSubList(cardIndex);
-
-      if (validBuild(cardList)
-              && destPile.canBeAdded(cardList.get(0))
+      if (validBuild(cardList) && destPile.canBeAdded(cardList.get(0))
               && cardList.size() <= getValidSize(emptyOpenPile, emptyCascadePiles)
               && destination == PileType.CASCADE) {
 
