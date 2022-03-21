@@ -14,8 +14,8 @@ public class BulkAssignMacroTest {
     macro = new BulkAssignMacro(10.0, 1, 3, 4, 10);
     macro.apply(s);
 
-    for (int row = 1; row <= 3; row++) {
-      for (int column = 4; row <= 10; column++) {
+    for (int row = 1; row < 3; row++) {
+      for (int column = 4; column < 10; column++) {
         assertEquals(s.get(row, column), 10.0, 0.01);
       }
     }
