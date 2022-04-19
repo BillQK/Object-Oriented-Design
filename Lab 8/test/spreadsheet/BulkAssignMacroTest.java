@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * A test class Bulk Assign Macro.
+ */
 public class BulkAssignMacroTest {
   ISpreadSheetWithMacros macro;
   SpreadSheet s;

@@ -1,5 +1,8 @@
 package spreadsheet;
 
+/**
+ * A bulkAssignMacro.
+ */
 public class BulkAssignMacro extends SparseSpreadSheet implements ISpreadSheetWithMacros {
   private final double value;
   private final int row1;
@@ -7,6 +10,15 @@ public class BulkAssignMacro extends SparseSpreadSheet implements ISpreadSheetWi
   private final int column1;
   private final int column2;
 
+  /**
+   * A constructor BulkAssignMacro.
+   *
+   * @param value double
+   * @param row1 int
+   * @param row2 int
+   * @param column1 int
+   * @param column2 int
+   */
   public BulkAssignMacro(Double value, int row1, int row2, int column1, int column2) {
     if (row2 < 0 || column2 < 0 || row2 < row1 || column2 < column1) {
       throw new IllegalArgumentException("Invalid number");
